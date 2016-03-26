@@ -54,7 +54,7 @@ ci: ${BINDATA_RELEASE_FILE} $(SOURCES)
 	rm $$GOPATH/src/`cat .godir` || true
 	mkdir -p $$GOPATH/src/`cat .godir`
 	rsync -ar --delete . $$GOPATH/src/`cat .godir`
-	cd $$GOPATH/src/`cat .godir` && gometalinter --disable=gotype --exclude="bindata_*" --vendor --deadline=2m ./...
+	cd $$GOPATH/src/`cat .godir` && $(MAKE) metalinter
 	cd $$GOPATH/src/`cat .godir` && $(MAKE) test
 	cd $$GOPATH/src/`cat .godir` && go build -ldflags '-X main.Version=${TAG}' -o ${APP_NAME}
 
