@@ -4,7 +4,7 @@
 
 .PHONY: metalinter
 metalinter: ${APP_NAME}
-	gometalinter --exclude="bindata_*" --vendor --deadline=10m ./...
+	gometalinter --exclude="bindata_*" --vendor --disable=gotype --deadline=10m ./...
 
 .PHONY: prepare_metalinter
 prepare_metalinter: ${GOPATH}/bin/gometalinter
