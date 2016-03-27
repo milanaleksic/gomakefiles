@@ -2,14 +2,10 @@
 #   APP_NAME - project (github) name
 #   GOPATH
 #   RELEASE_SOURCES - all sources, including release-only files (if applicable)
-#   TAG (optional, if deploy is called directly)
-
-VERSION := $(shell git name-rev --tags --name-only `git rev-parse HEAD`)
-IS_DEFINED_VERSION := $(shell [ ! "${VERSION}" == "undefined" ] && echo true)
 
 .PHONY: ci
-ci: $(SOURCES)
-	./go-wrapper download .
+ci: $(RELEASE_SOURCES)
+	$(dir $(lastword $(MAKEFILE_LIST)))/go-wrapper download .
 	$(MAKE) test
 	$(MAKE) metalinter_slow
 	$(MAKE) ${APP_NAME}_linux_arm5
@@ -17,22 +13,22 @@ ci: $(SOURCES)
 	$(MAKE) ${APP_NAME}_linux_arm7
 	$(MAKE) ${APP_NAME}_linux_amd64
 
-${APP_NAME}_linux_arm5: $(SOURCES)
+${APP_NAME}_linux_arm5: $(RELEASE_SOURCES)
 	echo Building Linux ARM5 version ${VERSION}
 	GOOS=linux GOARCH=arm GOARM=5 go build -ldflags '-X main.Version=${VERSION}' -o ${APP_NAME}_linux_arm5
 	PATH=$$PATH:. goupx ${APP_NAME}_linux_arm5
 
-${APP_NAME}_linux_arm6: $(SOURCES)
+${APP_NAME}_linux_arm6: $(RELEASE_SOURCES)
 	echo Building Linux ARM6 version ${VERSION}
 	GOOS=linux GOARCH=arm GOARM=6 go build -ldflags '-X main.Version=${VERSION}' -o ${APP_NAME}_linux_arm6
 	PATH=$$PATH:. goupx ${APP_NAME}_linux_arm6
 
-${APP_NAME}_linux_arm7: $(SOURCES)
+${APP_NAME}_linux_arm7: $(RELEASE_SOURCES)
 	echo Building Linux ARM7 version ${VERSION}
 	GOOS=linux GOARCH=arm GOARM=7 go build -ldflags '-X main.Version=${VERSION}' -o ${APP_NAME}_linux_arm7
 	PATH=$$PATH:. goupx ${APP_NAME}_linux_arm7
 
-${APP_NAME}_linux_amd64: $(SOURCES)
+${APP_NAME}_linux_amd64: $(RELEASE_SOURCES)
 	echo Building Linux AMD64 version ${VERSION}
 	GOOS=linux GOARCH=amd64 go build -ldflags '-X main.Version=${VERSION}' -o ${APP_NAME}_amd64
 	PATH=$$PATH:. goupx ${APP_NAME}_amd64
