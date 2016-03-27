@@ -2,7 +2,7 @@
 #   APP_NAME - project (github) name
 #   GOPATH
 
-include metalinter_common.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))/metalinter_common.mk
 
 .PHONY: metalinter
 metalinter: ${APP_NAME}
