@@ -9,8 +9,6 @@ IS_DEFINED_VERSION := $(shell [ ! "${VERSION}" == "undefined" ] && echo true)
 
 .PHONY: ci
 ci: $(SOURCES)
-	$(MAKE) clean
-	$(MAKE) prepare
 	./go-wrapper download .
 	$(MAKE) test
 	$(MAKE) metalinter_slow
