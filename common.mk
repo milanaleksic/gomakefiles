@@ -20,4 +20,5 @@ test:
 .PHONY: clean_common
 clean_common:
 	rm -rf ${APP_NAME}
+	rm -rf ${APP_NAME}_*
 	rm -rf ${APP_NAME}.exe

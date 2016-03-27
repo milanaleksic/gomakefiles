@@ -50,7 +50,7 @@ endif
 	github-release upload -u milanaleksic -r ${APP_NAME} --tag ${TAG} --name "${APP_NAME}-${TAG}-linux-amd64" -f ${APP_NAME}
 
 .PHONY: ci
-ci: ${BINDATA_RELEASE_FILE} $(SOURCES)
+ci: ${RELEASE_SOURCES}
 	rm $$GOPATH/src/`cat .godir` || true
 	mkdir -p $$GOPATH/src/`cat .godir`
 	rsync -ar --delete . $$GOPATH/src/`cat .godir`
