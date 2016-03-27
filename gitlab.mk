@@ -7,7 +7,7 @@
 ci: $(RELEASE_SOURCES)
 	$(dir $(lastword $(MAKEFILE_LIST)))/go-wrapper download .
 	$(MAKE) test
-	$(MAKE) metalinter_slow
+	$(MAKE) metalinter
 	$(MAKE) ${APP_NAME}_linux_arm5
 	$(MAKE) ${APP_NAME}_linux_arm6
 	$(MAKE) ${APP_NAME}_linux_arm7
