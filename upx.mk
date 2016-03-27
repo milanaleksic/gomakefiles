@@ -10,11 +10,11 @@ prepare_upx: ${GOPATH}/bin/goupx \
 upx:
 	if [ "$$(upx -V > /dev/null 2>&1 && echo OK)" == "OK" ]; \
 	then \
-		ln -s $(shell which upx) tools/upx; \
+		ln -s $(shell which upx) upx; \
 	elif [ "${UPX_ARCH}" == "amd64" ]; \
 	then \
 		curl http://upx.sourceforge.net/download/upx-3.91-${UPX_ARCH}_linux.tar.bz2 | tar xjvf - && \
-		mv upx-3.91-${UPX_ARCH}_linux/upx tools/upx && \
+		mv upx-3.91-${UPX_ARCH}_linux/upx upx && \
 		rm -rf upx-3.91-${UPX_ARCH}_linux; \
 	else \
 		echo Please install UPX for your ARM server via apt-get or fix Makefile to work with your system; \
