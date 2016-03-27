@@ -45,7 +45,3 @@ test:
 .PHONY: clean_gitlab
 clean_gitlab:
 	unlink $$GOPATH/src/$(shell cat .godir) 2>/dev/null || true
-
-.PHONY: prepare_gitlab
-prepare_gitlab:
-	git submodule update --init
