@@ -3,6 +3,7 @@
 #   GOPATH
 #   RELEASE_SOURCES - all sources, including release-only files (if applicable)
 #   TAG (optional, if deploy is called directly)
+#   PACKAGE - what is the full package name for this go application?
 
 VERSION := $(shell git name-rev --tags --name-only `git rev-parse HEAD`)
 IS_DEFINED_VERSION := $(shell [ ! "${VERSION}" == "undefined" ] && echo true)
@@ -51,12 +52,12 @@ endif
 
 .PHONY: ci
 ci: ${RELEASE_SOURCES}
-	rm $$GOPATH/src/`cat .godir` || true
-	mkdir -p $$GOPATH/src/`cat .godir`
-	rsync -ar --delete . $$GOPATH/src/`cat .godir`
-	cd $$GOPATH/src/`cat .godir` && $(MAKE) metalinter
-	cd $$GOPATH/src/`cat .godir` && $(MAKE) test
-	cd $$GOPATH/src/`cat .godir` && go build -ldflags '-X main.Version=${TAG}' -o ${APP_NAME}
+	rm $$GOPATH/src/$(PACKAGE) || true
+	mkdir -p $$GOPATH/src/$(PACKAGE)
+	rsync -ar --delete . $$GOPATH/src/$(PACKAGE)
+	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) metalinter
+	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) test
+	cd $$GOPATH/src/$(PACKAGE) && go build -ldflags '-X main.Version=${TAG}' -o ${APP_NAME}
 
 .PHONY: prepare_github_release
 prepare_github_release: ${GOPATH}/bin/github-release

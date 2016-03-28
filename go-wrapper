@@ -48,7 +48,7 @@ if ! shift; then
 	exit 1
 fi
 
-goDir="$(go list -e -f '{{.ImportComment}}' 2>/dev/null || true)"
+goDir="$(go list -e 2>/dev/null || true)"
 
 if [ -z "$goDir" -a -s .godir ]; then
 	goDir="$(cat .godir)"

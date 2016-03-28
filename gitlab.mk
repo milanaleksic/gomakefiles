@@ -2,6 +2,9 @@
 #   APP_NAME - project (github) name
 #   GOPATH
 #   RELEASE_SOURCES - all sources, including release-only files (if applicable)
+#   PACKAGE - what is the full package name for this go application?
+
+VERSION := $(shell git name-rev --tags --name-only `git rev-parse HEAD`)
 
 .PHONY: ci
 ci: $(RELEASE_SOURCES)
@@ -40,4 +43,4 @@ test:
 
 .PHONY: clean_gitlab
 clean_gitlab:
-	unlink $$GOPATH/src/$(shell cat .godir) 2>/dev/null || true
+	unlink $$GOPATH/src/$(PACKAGE) 2>/dev/null || true
