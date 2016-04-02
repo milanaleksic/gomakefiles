@@ -6,7 +6,7 @@ Various partial Makefiles to stabilize different Go projects of mine to use same
 
 ### metalinter blocking pushes
 
-Modify .git/hooks/pre-commit
+Modify .git/hooks/pre-push
 
     #!/bin/bash
     make metalinter
