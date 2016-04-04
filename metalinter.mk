@@ -8,4 +8,4 @@ EXCLUDES_METALINTER := bindata_.*.go
 
 .PHONY: metalinter
 metalinter: ${APP_NAME}
-	gometalinter --exclude="${EXCLUDES_METALINTER}" --vendor --disable=gotype --deadline=10m ./...
+	gometalinter --exclude="${EXCLUDES_METALINTER}" --vendor --disable=gotype --deadline=10m ./... | sed "s/^/[METALINTER_WARN] /" || true
