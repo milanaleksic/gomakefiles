@@ -9,7 +9,7 @@ Various partial Makefiles to stabilize different Go projects of mine to use same
 Modify `.git/hooks/pre-push`
 
     #!/bin/bash
-    make metalinter
+    make metalinter_strict
 
 ### metalinter additional properties
 
