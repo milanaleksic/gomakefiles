@@ -18,22 +18,22 @@ ci: $(RELEASE_SOURCES)
 
 ${APP_NAME}_linux_arm5: $(RELEASE_SOURCES)
 	echo Building Linux ARM5 version ${VERSION}
-	GOOS=linux GOARCH=arm GOARM=5 go build -ldflags '-X main.Version=${VERSION}' -o ${APP_NAME}_linux_arm5
+	GOOS=linux GOARCH=arm GOARM=5 go build -ldflags '-s -w -X main.Version=${VERSION}' -o ${APP_NAME}_linux_arm5
 	PATH=$$PATH:. goupx ${APP_NAME}_linux_arm5
 
 ${APP_NAME}_linux_arm6: $(RELEASE_SOURCES)
 	echo Building Linux ARM6 version ${VERSION}
-	GOOS=linux GOARCH=arm GOARM=6 go build -ldflags '-X main.Version=${VERSION}' -o ${APP_NAME}_linux_arm6
+	GOOS=linux GOARCH=arm GOARM=6 go build -ldflags '-s -w -X main.Version=${VERSION}' -o ${APP_NAME}_linux_arm6
 	PATH=$$PATH:. goupx ${APP_NAME}_linux_arm6
 
 ${APP_NAME}_linux_arm7: $(RELEASE_SOURCES)
 	echo Building Linux ARM7 version ${VERSION}
-	GOOS=linux GOARCH=arm GOARM=7 go build -ldflags '-X main.Version=${VERSION}' -o ${APP_NAME}_linux_arm7
+	GOOS=linux GOARCH=arm GOARM=7 go build -ldflags '-s -w -X main.Version=${VERSION}' -o ${APP_NAME}_linux_arm7
 	PATH=$$PATH:. goupx ${APP_NAME}_linux_arm7
 
 ${APP_NAME}_linux_amd64: $(RELEASE_SOURCES)
 	echo Building Linux AMD64 version ${VERSION}
-	GOOS=linux GOARCH=amd64 go build -ldflags '-X main.Version=${VERSION}' -o ${APP_NAME}_amd64
+	GOOS=linux GOARCH=amd64 go build -ldflags '-s -w -X main.Version=${VERSION}' -o ${APP_NAME}_amd64
 	PATH=$$PATH:. goupx ${APP_NAME}_amd64
 
 # test needs to be overriden since the original version doesn't work

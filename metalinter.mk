@@ -6,7 +6,7 @@ EXCLUDES_METALINTER := bindata_.*.go
 EXTRA_ARGS_METALINTER := 
 
 .PHONY: prepare_metalinter
-	prepare_metalinter: ${GOPATH}/bin/gometalinter
+prepare_metalinter: ${GOPATH}/bin/gometalinter
 
 ${GOPATH}/bin/gometalinter:
 	go get github.com/alecthomas/gometalinter

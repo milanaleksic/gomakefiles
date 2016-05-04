@@ -41,12 +41,12 @@ endif
 	github-release release -u milanaleksic -r ${APP_NAME} --tag "${TAG}" --name "v${TAG}"
 
 	echo Building and shipping Windows
-	GOOS=windows go build -ldflags '-X main.Version=${TAG}'
+	GOOS=windows go build -ldflags '-s -w -X main.Version=${TAG}'
 	./upx ${APP_NAME}.exe
 	github-release upload -u milanaleksic -r ${APP_NAME} --tag ${TAG} --name "${APP_NAME}-${TAG}-windows-amd64.exe" -f ${APP_NAME}.exe
 
 	echo Building and shipping Linux
-	GOOS=linux go build -ldflags '-X main.Version=${TAG}'
+	GOOS=linux go build -ldflags '-s -w -X main.Version=${TAG}'
 	PATH=$$PATH:. goupx ${APP_NAME}
 	github-release upload -u milanaleksic -r ${APP_NAME} --tag ${TAG} --name "${APP_NAME}-${TAG}-linux-amd64" -f ${APP_NAME}
 
@@ -57,7 +57,7 @@ ci: ${RELEASE_SOURCES}
 	rsync -ar --delete . $$GOPATH/src/$(PACKAGE)
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) metalinter
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) test
-	cd $$GOPATH/src/$(PACKAGE) && go build -ldflags '-X main.Version=${TAG}' -o ${APP_NAME}
+	cd $$GOPATH/src/$(PACKAGE) && go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}
 
 .PHONY: prepare_github_release
 prepare_github_release: ${GOPATH}/bin/github-release
