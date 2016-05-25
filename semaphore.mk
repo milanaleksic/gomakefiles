@@ -58,6 +58,7 @@ ci: ${RELEASE_SOURCES}
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) metalinter
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) test
 	cd $$GOPATH/src/$(PACKAGE) && go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}
+	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) deploy-if-tagged
 
 .PHONY: prepare_github_release
 prepare_github_release: ${GOPATH}/bin/github-release
