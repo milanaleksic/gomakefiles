@@ -4,6 +4,8 @@ Various partial Makefiles to stabilize different Go projects of mine to use same
 
 ## Tips & Tricks
 
+Various tips and tricks of usage of tasks defined here
+
 ### metalinter blocking pushes
 
 Modify `.git/hooks/pre-push`
