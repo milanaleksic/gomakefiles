@@ -1,4 +1,4 @@
-# gomakefiles
+# Makefiles to be used with Go apps
 
 Various partial Makefiles to stabilize different Go projects of mine to use same
 
