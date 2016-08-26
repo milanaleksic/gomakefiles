@@ -4,6 +4,7 @@
 #   RELEASE_SOURCES - all sources, including release-only files (if applicable)
 #   TAG (optional, if deploy is called directly)
 #   PACKAGE - what is the full package name for this go application?
+#   MAIN_APP_DIR - what is the location from this Makefile of the main package that we consider main deployment artifact?
 
 VERSION := $(shell git name-rev --tags --name-only `git rev-parse HEAD`)
 IS_DEFINED_VERSION := $(shell [ ! "${VERSION}" == "undefined" ] && echo true)
@@ -41,14 +42,14 @@ endif
 	github-release release -u milanaleksic -r ${APP_NAME} --tag "${TAG}" --name "v${TAG}"
 
 	echo Building and shipping Windows
-	GOOS=windows go build -ldflags '-s -w -X main.Version=${TAG}'
-	./upx ${APP_NAME}.exe
-	github-release upload -u milanaleksic -r ${APP_NAME} --tag ${TAG} --name "${APP_NAME}-${TAG}-windows-amd64.exe" -f ${APP_NAME}.exe
+	cd ${MAIN_APP_DIR} && (GOOS=windows go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}.exe)
+	./upx $(FULL_APP_PATH).exe
+	github-release upload -u milanaleksic -r ${APP_NAME} --tag ${TAG} --name "${APP_NAME}-${TAG}-windows-amd64.exe" -f ${FULL_APP_PATH}.exe
 
 	echo Building and shipping Linux
-	GOOS=linux go build -ldflags '-s -w -X main.Version=${TAG}'
-	PATH=$$PATH:. goupx ${APP_NAME}
-	github-release upload -u milanaleksic -r ${APP_NAME} --tag ${TAG} --name "${APP_NAME}-${TAG}-linux-amd64" -f ${APP_NAME}
+	cd ${MAIN_APP_DIR} && (GOOS=linux go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME})
+	PATH=$$PATH:. goupx $(FULL_APP_PATH)
+	github-release upload -u milanaleksic -r ${APP_NAME} --tag ${TAG} --name "${APP_NAME}-${TAG}-linux-amd64" -f ${FULL_APP_PATH}
 
 .PHONY: ci
 ci: ${RELEASE_SOURCES}
@@ -57,7 +58,7 @@ ci: ${RELEASE_SOURCES}
 	rsync -ar --delete . $$GOPATH/src/$(PACKAGE)
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) metalinter
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) test
-	cd $$GOPATH/src/$(PACKAGE) && go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}
+	cd $$GOPATH/src/$(PACKAGE)/$(MAIN_APP_DIR) && go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) deploy-if-tagged
 
 .PHONY: prepare_github_release

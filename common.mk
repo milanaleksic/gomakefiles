@@ -3,15 +3,19 @@
 
 SOURCEDIR = .
 
+MAIN_APP_DIR ?= .
+
 SHELL := /bin/bash
 
 GOPATH := ${GOPATH}
 
-.DEFAULT_GOAL := ${APP_NAME}
+FULL_APP_PATH := ${MAIN_APP_DIR}/${APP_NAME}
+
+.DEFAULT_GOAL := ${FULL_APP_PATH}
 
 .PHONY: run
-run: ${APP_NAME}
-	./${APP_NAME}
+run: ${FULL_APP_PATH}
+	${FULL_APP_PATH}
 
 .PHONY: test
 test:
@@ -19,6 +23,6 @@ test:
 
 .PHONY: clean_common
 clean_common:
-	rm -rf ${APP_NAME}
-	rm -rf ${APP_NAME}_*
-	rm -rf ${APP_NAME}.exe
+	rm -rf ${FULL_APP_PATH}
+	rm -rf ${FULL_APP_PATH}_*
+	rm -rf ${FULL_APP_PATH}.exe
