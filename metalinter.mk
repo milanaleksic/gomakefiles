@@ -13,9 +13,9 @@ ${GOPATH}/bin/gometalinter:
 	gometalinter --install --update
 
 .PHONY: metalinter
-metalinter: ${APP_NAME}
+metalinter: $(SOURCES)
 	gometalinter --exclude="${EXCLUDES_METALINTER}" --vendor --disable=gotype --deadline=10m ${EXTRA_ARGS_METALINTER} ./... | sed "s/^/[METALINTER_WARN] /" || true
 
 .PHONY: metalinter_strict
-metalinter_strict: ${APP_NAME}
+metalinter_strict: $(SOURCES)
 	gometalinter --exclude="${EXCLUDES_METALINTER}" --vendor --disable=gotype --deadline=10m ${EXTRA_ARGS_METALINTER} ./...
