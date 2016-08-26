@@ -61,6 +61,16 @@ ci: ${RELEASE_SOURCES}
 	cd $$GOPATH/src/$(PACKAGE)/$(MAIN_APP_DIR) && go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) deploy-if-tagged
 
+.PHONY: scrap_release
+scrap_release:
+ifndef TAG
+	$(error TAG parameter must be set: make TAG=<TAG_VALUE>)
+endif
+	git tag -d ${TAG} || true
+	git push origin :${TAG} || true
+	github-release delete -u milanaleksic -r ${APP_NAME} --tag "${TAG}" || true
+
+
 .PHONY: prepare_github_release
 prepare_github_release: ${GOPATH}/bin/github-release
 
