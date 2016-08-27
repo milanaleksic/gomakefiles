@@ -11,6 +11,8 @@ GOPATH := ${GOPATH}
 
 FULL_APP_PATH := ${MAIN_APP_DIR}/${APP_NAME}
 
+GOMAKEFILES_DIR = $(notdir $(patsubst %/,%,$(dir $(abspath $(filter %/common.mk,$(MAKEFILE_LIST))))))
+
 .DEFAULT_GOAL := ${FULL_APP_PATH}
 
 .PHONY: run
@@ -26,3 +28,8 @@ clean_common:
 	rm -rf ${FULL_APP_PATH}
 	rm -rf ${FULL_APP_PATH}_*
 	rm -rf ${FULL_APP_PATH}.exe
+
+.PHONY: prepare_githooks
+prepare_githooks:
+	rm .git/hooks/pre-push
+	ln -s ../../$(GOMAKEFILES_DIR)/githook_prepush.sh .git/hooks/pre-push
