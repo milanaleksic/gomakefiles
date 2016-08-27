@@ -31,5 +31,5 @@ clean_common:
 
 .PHONY: prepare_githooks
 prepare_githooks:
-	rm .git/hooks/pre-push
+	rm .git/hooks/pre-push || true
 	ln -s ../../$(GOMAKEFILES_DIR)/githook_prepush.sh .git/hooks/pre-push
