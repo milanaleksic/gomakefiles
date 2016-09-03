@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 echo "Executing pre-push script: goimports"
 make goimports_check
 

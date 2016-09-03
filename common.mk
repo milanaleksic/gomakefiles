@@ -39,7 +39,7 @@ goimports_check:
 	@BAD_FILES_COUNT="$$(goimports -l . | grep -v vendor | wc -l)"; \
 	if [ "$$BAD_FILES_COUNT" != "0" ]; \
 	then \
-		echo -e "There are $$BAD_FILES_COUNT with bad formatting:"; \
+		echo -e "There is/are $$BAD_FILES_COUNT file(s) with bad formatting:"; \
 		goimports -l . | grep -v vendor; \
 		exit 1; \
 	fi
