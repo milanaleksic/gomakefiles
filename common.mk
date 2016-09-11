@@ -26,7 +26,6 @@ test:
 .PHONY: clean_common
 clean_common:
 	rm -rf ${FULL_APP_PATH}
-	rm -rf ${FULL_APP_PATH}_*
 	rm -rf ${FULL_APP_PATH}.exe
 
 .PHONY: prepare_githooks
