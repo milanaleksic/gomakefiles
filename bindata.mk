@@ -2,13 +2,13 @@
 #   GOPATH
 #   SOURCEDIR - where is the root of the project
 
-DATA_DIR := $(SOURCEDIR)/data
+DATA_DIR ?= $(SOURCEDIR)/data
 
 SOURCES_DATA := $(shell find $(DATA_DIR))
 
-BINDATA_DEBUG_FILE := $(SOURCEDIR)/bindata_debug.go
+BINDATA_DEBUG_FILE ?= $(SOURCEDIR)/bindata_debug.go
 
-BINDATA_RELEASE_FILE := $(SOURCEDIR)/bindata_release.go
+BINDATA_RELEASE_FILE ?= $(SOURCEDIR)/bindata_release.go
 
 prepare_bindata: ${GOPATH}/bin/go-bindata
 
