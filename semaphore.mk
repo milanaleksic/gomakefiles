@@ -52,7 +52,7 @@ endif
 	github-release upload -u milanaleksic -r ${APP_NAME} --tag ${TAG} --name "${APP_NAME}-${TAG}-linux-amd64" -f ${FULL_APP_PATH}
 
 .PHONY: ci
-ci: ${RELEASE_SOURCES}
+ci: ${RELEASE_SOURCES} $(BINDATA_RELEASE_FILE)
 	rm $$GOPATH/src/$(PACKAGE) || true
 	mkdir -p $$GOPATH/src/$(PACKAGE)
 	rsync -ar --delete . $$GOPATH/src/$(PACKAGE)
