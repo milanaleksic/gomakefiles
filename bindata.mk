@@ -6,9 +6,9 @@ DATA_DIR ?= $(SOURCEDIR)/data
 
 SOURCES_DATA := $(shell find $(DATA_DIR))
 
-BINDATA_DEBUG_FILE ?= $(DATA_DIR)/../bindata_debug.go
+BINDATA_DEBUG_FILE ?= $(shell realpath $(DATA_DIR)/../bindata_debug.go)
 
-BINDATA_RELEASE_FILE ?= $(DATA_DIR)/../bindata_release.go
+BINDATA_RELEASE_FILE ?= $(shell realpath $(DATA_DIR)/../bindata_release.go)
 
 BINDATA_PKG ?= main
 
