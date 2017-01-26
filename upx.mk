@@ -5,10 +5,7 @@ UPX_ARCH := $(shell if grep -q arm <(uname -m); then echo 'armeb'; else echo 'am
 UPX_VERSION := 3.92
 
 .PHONY: prepare_upx
-prepare_upx: ${GOPATH}/bin/goupx \
-	upx
-
-upx:
+prepare_upx:
 	if [ "$$(upx -V > /dev/null 2>&1 && echo OK)" == "OK" ]; \
 	then \
 		ln -s $(shell which upx) upx; \
@@ -21,6 +18,3 @@ upx:
 		echo Please install UPX for your ARM server via apt-get or fix Makefile to work with your system; \
 		exit 1; \
 	fi
-
-${GOPATH}/bin/goupx:
-	go get github.com/pwaller/goupx
