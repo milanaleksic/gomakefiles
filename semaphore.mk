@@ -43,7 +43,7 @@ endif
 
 	echo Building and shipping Windows
 	cd ${MAIN_APP_DIR} && (GOOS=windows go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}.exe)
-	./upx --strip-binary -q $(FULL_APP_PATH).exe
+	./upx -q $(FULL_APP_PATH).exe
 	github-release upload -u milanaleksic -r ${APP_NAME} --tag ${TAG} --name "${APP_NAME}-${TAG}-windows-amd64.exe" -f ${FULL_APP_PATH}.exe
 
 	echo Building and shipping Linux X64
