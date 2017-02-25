@@ -15,9 +15,11 @@ GOMAKEFILES_DIR = $(notdir $(patsubst %/,%,$(dir $(abspath $(filter %/common.mk,
 
 .DEFAULT_GOAL := ${FULL_APP_PATH}
 
+RUN_APP_ARGS := ""
+
 .PHONY: run
 run: ${FULL_APP_PATH}
-	${FULL_APP_PATH}
+	${FULL_APP_PATH} ${RUN_APP_ARGS}
 
 .PHONY: test
 test:
