@@ -17,3 +17,10 @@ endif
 	echo Deploying...
 	$(MAKE) _deploy
 
+.PHONY: scrap_release
+scrap_release:
+ifndef TAG
+	$(error TAG parameter must be set: make TAG=<TAG_VALUE>)
+endif
+	git tag -d ${TAG} || true
+	git push origin :${TAG} || true
