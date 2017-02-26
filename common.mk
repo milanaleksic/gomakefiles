@@ -44,3 +44,8 @@ goimports_check:
 		goimports -l . | grep -v vendor; \
 		exit 1; \
 	fi
+
+.PHONY: copy_to_vagrant
+copy_to_vagrant: $(MAIN_APP_DIR)/$(APP_NAME)
+	ssh -p 2222 vagrant@localhost 'pgrep ${APP_NAME} | xargs kill || true'
+	scp -P 2222 ${APP_NAME} vagrant@localhost:/home/vagrant/
