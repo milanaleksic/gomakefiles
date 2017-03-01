@@ -13,8 +13,8 @@ DIRECTORIES_WITH_GO_TO_WATCH := $(shell find $(SOURCEDIR) -maxdepth 1 -type d \
 	-not -path './.*' \
 	| xargs realpath | awk '{ print "(" $$1 "/[^.\\/]+\\.(go|toml))|" }' | paste -sd '' -)
 
-.PHONY: wago-tdd
-wago-tdd:
+.PHONY: tdd
+tdd:
 	wago -cmd "$(MAKE) test" -watch '/[^\\.]+\.go": (CREATE|MODIFY$$)'
 
 .PHONY: watch

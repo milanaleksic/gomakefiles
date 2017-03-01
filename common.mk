@@ -47,5 +47,5 @@ goimports_check:
 
 .PHONY: copy_to_vagrant
 copy_to_vagrant: $(MAIN_APP_DIR)/$(APP_NAME)
-	ssh -p 2222 vagrant@localhost 'pgrep ${APP_NAME} | xargs kill || true'
+	ssh -p 2222 vagrant@localhost 'pgrep ${APP_NAME} | xargs kill > /dev/null 2>&1 || true'
 	scp -P 2222 ${APP_NAME} vagrant@localhost:/home/vagrant/
