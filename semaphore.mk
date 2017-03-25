@@ -75,7 +75,6 @@ endif
 	git push origin :${TAG} || true
 	github-release delete -u milanaleksic -r ${APP_NAME} --tag "${TAG}" || true
 
-
 .PHONY: prepare_github_release
 prepare_github_release: ${GOPATH}/bin/github-release
 
