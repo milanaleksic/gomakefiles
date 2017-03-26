@@ -23,6 +23,10 @@ run: ${FULL_APP_PATH}
 
 .PHONY: test
 test:
+	go test -v $$(go list ./... | grep -v /vendor/) -short
+
+.PHONY: test_full
+test_full:
 	go test -v $$(go list ./... | grep -v /vendor/)
 
 .PHONY: clean_common
