@@ -9,6 +9,22 @@
 VERSION := $(shell git name-rev --tags --name-only `git rev-parse HEAD`)
 IS_DEFINED_VERSION := $(shell [ ! "${VERSION}" == "undefined" ] && echo true)
 
+.PHONY: ci
+ci: ${RELEASE_SOURCES}
+ifndef SOL_USERNAME
+	$(error SOL_USERNAME parameter must be set: make SOL_USERNAME=<SOL_USERNAME_VALUE>)
+endif
+ifndef SOL_PASSWORD
+	$(error SOL_PASSWORD parameter must be set: make SOL_PASSWORD=<SOL_PASSWORD_VALUE>)
+endif
+	rm $$GOPATH/src/$(PACKAGE) || true
+	mkdir -p $$GOPATH/src/$(PACKAGE)
+	rsync -ar --delete . $$GOPATH/src/$(PACKAGE)
+	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) metalinter
+	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) test
+	cd $$GOPATH/src/$(PACKAGE)/$(MAIN_APP_DIR) && go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}
+	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) deploy-if-tagged
+
 .PHONY: deploy-if-tagged
 deploy-if-tagged: ${RELEASE_SOURCES}
 ifeq ($(IS_DEFINED_VERSION),true)
@@ -36,24 +52,13 @@ endif
 	deploy_sol GOOS=linux GOARCH=amd64
 	deploy_sol GOOS=linux GOARCH=arm
 
-# TODO: use webdav to put files
 .PHONY: deploy_sol
 deploy_sol: ${RELEASE_SOURCES}
 	@echo Building and shipping ${GOOS} ${GOARCH}
 	cd ${MAIN_APP_DIR} && go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}
 	./upx -q $(FULL_APP_PATH)
-	ssh sol 'mkdir -p /volume1/artifacts/${APP_NAME}/'
-	scp $(FULL_APP_PATH) sol:/volume1/artifacts/${APP_NAME}/${APP_NAME}-${TAG}-${GOOS}-${GOARCH}
-
-.PHONY: ci
-ci: ${RELEASE_SOURCES}
-	rm $$GOPATH/src/$(PACKAGE) || true
-	mkdir -p $$GOPATH/src/$(PACKAGE)
-	rsync -ar --delete . $$GOPATH/src/$(PACKAGE)
-	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) metalinter
-	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) test
-	cd $$GOPATH/src/$(PACKAGE)/$(MAIN_APP_DIR) && go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}
-	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) deploy-if-tagged
+	@curl -X MKCOL --anyauth --user '${SOL_USERNAME}:${SOL_PASSWORD}' '${SOL_LOCATION}/${APP_NAME}'
+	@curl -X PUT --anyauth --user '${SOL_USERNAME}:${SOL_PASSWORD}' -T $(FULL_APP_PATH) '${SOL_LOCATION}/${APP_NAME}/${APP_NAME}-${TAG}-${GOOS}-${GOARCH}'
 
 .PHONY: scrap_release
 scrap_release:
