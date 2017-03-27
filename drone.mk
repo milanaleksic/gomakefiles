@@ -6,8 +6,8 @@
 #   PACKAGE - what is the full package name for this go application?
 #   MAIN_APP_DIR - what is the location from this Makefile of the main package that we consider main deployment artifact?
 
-VERSION := $(shell git name-rev --tags --name-only `git rev-parse HEAD`)
-IS_DEFINED_VERSION := $(shell [ ! "${VERSION}" == "undefined" ] && echo true)
+VERSION := ${DRONE_TAG}
+IS_DEFINED_VERSION := $(shell [ ! "${VERSION}" == "" ] && echo true)
 
 .PHONY: ci
 ci: ${RELEASE_SOURCES}
@@ -27,7 +27,6 @@ endif
 
 .PHONY: deploy-if-tagged
 deploy-if-tagged: ${RELEASE_SOURCES}
-	@echo VERSION=${VERSION} IS_DEFINED_VERSION=${IS_DEFINED_VERSION}
 ifeq ($(IS_DEFINED_VERSION),true)
 	$(MAKE) _deploy_to_sol TAG=$(VERSION)
 endif
@@ -50,8 +49,8 @@ _deploy_to_sol: ${RELEASE_SOURCES}
 ifndef TAG
 	$(error TAG parameter must be set: make TAG=<TAG_VALUE>)
 endif
-	deploy_sol GOOS=linux GOARCH=amd64
-	deploy_sol GOOS=linux GOARCH=arm
+	$(MAKE) deploy_sol GOOS=linux GOARCH=amd64
+	$(MAKE) deploy_sol GOOS=linux GOARCH=arm
 
 .PHONY: deploy_sol
 deploy_sol: ${RELEASE_SOURCES}
@@ -68,3 +67,12 @@ ifndef TAG
 endif
 	git tag -d ${TAG} || true
 	git push origin :${TAG} || true
+
+.PHONY: cd
+cd:
+ifndef BASTION_TOKEN
+	$(error BASTION_TOKEN parameter must be set: make BASTION_TOKEN=<BASTION_TOKEN_VALUE>)
+endif
+ifeq ($(IS_DEFINED_VERSION),true)
+	curl -X POST https://misc.milanaleksic.net/bastion/deploy?value=${VERSION} --header 'Authorization: Token ${BASTION_TOKEN}'
+endif
