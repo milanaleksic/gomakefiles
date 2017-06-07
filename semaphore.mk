@@ -9,6 +9,9 @@
 VERSION := $(shell git name-rev --tags --name-only `git rev-parse HEAD`)
 IS_DEFINED_VERSION := $(shell [ ! "${VERSION}" == "undefined" ] && echo true)
 
+.PHONY: build_release_files
+build_release_files: ${RELEASE_SOURCES}
+
 .PHONY: deploy-if-tagged
 deploy-if-tagged: ${RELEASE_SOURCES}
 ifeq ($(IS_DEFINED_VERSION),true)
