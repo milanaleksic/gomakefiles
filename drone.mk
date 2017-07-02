@@ -9,7 +9,7 @@
 VERSION := ${DRONE_TAG}
 IS_DEFINED_VERSION := $(shell [ ! "${VERSION}" == "" ] && echo true)
 ifneq ($(IS_DEFINED_VERSION),true)
-	VERSION := $(shell git name-rev --tags --name-only `git rev-parse HEAD`)
+VERSION := $(shell git name-rev --tags --name-only `git rev-parse HEAD`)
 endif
 
 .PHONY: ci
