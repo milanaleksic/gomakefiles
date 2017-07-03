@@ -27,7 +27,10 @@ endif
 .PHONY: deploy-if-tagged
 deploy-if-tagged: ${RELEASE_SOURCES}
 ifeq ($(IS_DEFINED_VERSION),true)
+IS_REAL_VERSION := $(shell [ ! "${VERSION}" == "undefined" ] && echo true)
+ifneq ($(IS_REAL_VERSION),true)
 	$(MAKE) _deploy_to_sol TAG=$(VERSION)
+endif
 endif
 
 .PHONY: deploy
