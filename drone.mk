@@ -74,6 +74,6 @@ cd:
 ifndef BASTION_TOKEN
 	$(error BASTION_TOKEN parameter must be set: make BASTION_TOKEN=<BASTION_TOKEN_VALUE>)
 endif
-ifeq ($(IS_DEFINED_VERSION),true)
+ifeq ($(IS_REAL_VERSION),true)
 	curl -X POST https://misc.milanaleksic.net/bastion/deploy?value=${VERSION} --header 'Authorization: Token ${BASTION_TOKEN}'
 endif
