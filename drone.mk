@@ -6,11 +6,7 @@
 #   PACKAGE - what is the full package name for this go application?
 #   MAIN_APP_DIR - what is the location from this Makefile of the main package that we consider main deployment artifact?
 
-VERSION := ${DRONE_TAG}
-IS_DEFINED_VERSION := $(shell [ ! "${VERSION}" == "" ] && echo true)
-ifneq ($(IS_DEFINED_VERSION),true)
-VERSION := $(shell git name-rev --tags --name-only `git rev-parse HEAD`)
-endif
+include gomakefiles/drone_version.mk
 
 .PHONY: ci
 ci: ${RELEASE_SOURCES}
