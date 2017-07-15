@@ -6,4 +6,4 @@ git config --get remote.origin.url \
     | sed 's/.*@//g' \
     | sed 's/:/\//g' \
     | sed 's/.git//g' \
-    | sed 's/git.milanaleksic.net\/milanaleksic/go.milanaleksic.net/g'
+    | sed 's/git.milanaleksic.net\/milanaleksic/go.milanaleksic.net\/milanaleksic/g'
