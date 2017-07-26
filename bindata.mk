@@ -35,3 +35,7 @@ clean_bindata:
 	@echo cleaning bindata
 	@rm -rf ${BINDATA_DEBUG_FILE}
 	@rm -rf ${BINDATA_RELEASE_FILE}
+
+.PHONY: check_undefined_version
+check_undefined_version:
+	@[ ! `egrep "\-undefined" ${BINDATA_DEBUG_FILE} | wc -l` == "0" ]
