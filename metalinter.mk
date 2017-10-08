@@ -3,7 +3,7 @@
 #   GOPATH
 #   RESOURCES_DIR - where is bindata resources directory (where are bindata GO files generated)
 
-EXCLUDES_METALINTER := $(RESOURCES_DIR)/bindata_.*.go
+EXCLUDES_METALINTER := ($(RESOURCES_DIR)/bindata_.*.go)|(.*_test.go)
 EXTRA_ARGS_METALINTER := 
 
 .PHONY: prepare_metalinter
