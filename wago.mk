@@ -1,10 +1,9 @@
 # Depends on:
 #   GOPATH
 
-.PHONY: prepare_wago
-prepare_wago: ${GOPATH}/bin/wago
+WAGO := ${GOPATH}/bin/wago
 
-${GOPATH}/bin/wago:
+$(WAGO):
 	go get github.com/milanaleksic/wago
 
 DIRECTORIES_WITH_GO_TO_WATCH := $(shell find $(SOURCEDIR) -maxdepth 1 -type d \
@@ -15,8 +14,8 @@ DIRECTORIES_WITH_GO_TO_WATCH := $(shell find $(SOURCEDIR) -maxdepth 1 -type d \
 
 .PHONY: tdd
 tdd:
-	wago -cmd "$(MAKE) test" -watch '/[^\\.]+\.go": (CREATE|MODIFY$$)'
+	$(WAGO) -cmd "$(MAKE) test" -watch '/[^\\.]+\.go": (CREATE|MODIFY$$)'
 
 .PHONY: watch
-watch:
-	wago -cmd '$(MAKE) run' -watch "$(DIRECTORIES_WITH_GO_TO_WATCH)nonexisting\": (CREATE|MODIFY$$)"
+watch: | $(WAGO)
+	$(WAGO) -cmd '$(MAKE) run' -watch "$(DIRECTORIES_WITH_GO_TO_WATCH)nonexisting\": (CREATE|MODIFY$$)"
