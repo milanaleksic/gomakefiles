@@ -35,7 +35,7 @@ endif
 	$(MAKE) _release_to_github
 
 .PHONY: _release_to_github
-_release_to_github: ${RELEASE_SOURCES}
+_release_to_github: ${RELEASE_SOURCES} | $(UPX)
 ifndef GITHUB_TOKEN
 	$(error GITHUB_TOKEN parameter must be set)
 endif
@@ -46,17 +46,17 @@ endif
 
 	echo Building and shipping Windows
 	cd ${MAIN_APP_DIR} && (GOOS=windows go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}.exe)
-	./upx -q $(FULL_APP_PATH).exe
+	$(UPX) -q $(FULL_APP_PATH).exe
 	github-release upload -u milanaleksic -r ${APP_NAME} --tag ${TAG} --name "${APP_NAME}-${TAG}-windows-amd64.exe" -f ${FULL_APP_PATH}.exe
 
 	echo Building and shipping Linux X64
 	cd ${MAIN_APP_DIR} && (GOOS=linux go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME})
-	./upx -q $(FULL_APP_PATH)
+	$(UPX) -q $(FULL_APP_PATH)
 	github-release upload -u milanaleksic -r ${APP_NAME} --tag ${TAG} --name "${APP_NAME}-${TAG}-linux-amd64" -f ${FULL_APP_PATH}
 
 	echo Building and shipping Linux ARM
 	cd ${MAIN_APP_DIR} && (GOOS=linux GOARCH=arm go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME})
-	./upx -q $(FULL_APP_PATH)
+	$(UPX) -q $(FULL_APP_PATH)
 	github-release upload -u milanaleksic -r ${APP_NAME} --tag ${TAG} --name "${APP_NAME}-${TAG}-linux-arm" -f ${FULL_APP_PATH}
 
 .PHONY: ci

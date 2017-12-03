@@ -16,25 +16,25 @@ ci: $(RELEASE_SOURCES)
 	$(MAKE) ${APP_NAME}_linux_arm7
 	$(MAKE) ${APP_NAME}_linux_amd64
 
-${APP_NAME}_linux_arm5: $(RELEASE_SOURCES)
+${APP_NAME}_linux_arm5: $(RELEASE_SOURCES) | $(UPX)
 	echo Building Linux ARM5 version ${VERSION}
 	GOOS=linux GOARCH=arm GOARM=5 go build -ldflags '-s -w -X main.Version=${VERSION}' -o ${APP_NAME}_linux_arm5
-	./upx -q ${APP_NAME}_linux_arm5
+	$(UPX) -q ${APP_NAME}_linux_arm5
 
-${APP_NAME}_linux_arm6: $(RELEASE_SOURCES)
+${APP_NAME}_linux_arm6: $(RELEASE_SOURCES) | $(UPX)
 	echo Building Linux ARM6 version ${VERSION}
 	GOOS=linux GOARCH=arm GOARM=6 go build -ldflags '-s -w -X main.Version=${VERSION}' -o ${APP_NAME}_linux_arm6
-	./upx -q ${APP_NAME}_linux_arm6
+	$(UPX) -q ${APP_NAME}_linux_arm6
 
-${APP_NAME}_linux_arm7: $(RELEASE_SOURCES)
+${APP_NAME}_linux_arm7: $(RELEASE_SOURCES) | $(UPX)
 	echo Building Linux ARM7 version ${VERSION}
 	GOOS=linux GOARCH=arm GOARM=7 go build -ldflags '-s -w -X main.Version=${VERSION}' -o ${APP_NAME}_linux_arm7
-	./upx -q ${APP_NAME}_linux_arm7
+	$(UPX) -q ${APP_NAME}_linux_arm7
 
-${APP_NAME}_linux_amd64: $(RELEASE_SOURCES)
+${APP_NAME}_linux_amd64: $(RELEASE_SOURCES) | $(UPX)
 	echo Building Linux AMD64 version ${VERSION}
 	GOOS=linux GOARCH=amd64 go build -ldflags '-s -w -X main.Version=${VERSION}' -o ${APP_NAME}_amd64
-	./upx -q ${APP_NAME}_amd64
+	$(UPX) -q ${APP_NAME}_amd64
 
 # test needs to be overriden since the original version doesn't work
 .PHONY: test
