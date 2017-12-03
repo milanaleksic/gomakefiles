@@ -15,22 +15,22 @@ BINDATA_RELEASE_FILE ?= $(RESOURCES_DIR)/bindata_release.go
 
 BINDATA_PKG ?= main
 
-prepare_bindata: ${GOPATH}/bin/go-bindata
+BINDATA := ${GOPATH}/bin/go-bindata
 
-${GOPATH}/bin/go-bindata:
-	go get github.com/jteeuwen/go-bindata/go-bindata
+$(BINDATA):
+	go get -u github.com/jteeuwen/go-bindata/go-bindata
 
-${BINDATA_DEBUG_FILE}: ${SOURCES_DATA} | $(GOIMPORTS)
+${BINDATA_DEBUG_FILE}: ${SOURCES_DATA} | $(GOIMPORTS) $(BINDATA)
 	@echo building debug bindata
 	@rm -rf ${BINDATA_RELEASE_FILE}
-	@go-bindata --debug -o=${BINDATA_DEBUG_FILE} -pkg ${BINDATA_PKG} ${DATA_DIR}/...
-	$(GOIMPORTS) -w ${BINDATA_DEBUG_FILE}
+	@$(BINDATA) --debug -o=${BINDATA_DEBUG_FILE} -pkg ${BINDATA_PKG} ${DATA_DIR}/...
+	@$(GOIMPORTS) -w ${BINDATA_DEBUG_FILE}
 
-${BINDATA_RELEASE_FILE}: ${SOURCES_DATA} | $(GOIMPORTS)
+${BINDATA_RELEASE_FILE}: ${SOURCES_DATA} | $(GOIMPORTS) $(BINDATA)
 	@echo building release bindata
 	@rm -rf ${BINDATA_DEBUG_FILE}
-	@go-bindata -nocompress=true -nomemcopy=true -o=${BINDATA_RELEASE_FILE} -pkg ${BINDATA_PKG} ${DATA_DIR}/...
-	$(GOIMPORTS) -w ${BINDATA_RELEASE_FILE}
+	@$(BINDATA) -nocompress=true -nomemcopy=true -o=${BINDATA_RELEASE_FILE} -pkg ${BINDATA_PKG} ${DATA_DIR}/...
+	@$(GOIMPORTS) -w ${BINDATA_RELEASE_FILE}
 
 .PHONY: clean_bindata
 clean_bindata:
