@@ -13,8 +13,8 @@ $(GOMETALINTER):
 
 .PHONY: metalinter
 metalinter: $(SOURCES) | $(GOMETALINTER)
-	$(GOMETALINTER) --exclude="${EXCLUDES_METALINTER}" --vendor --disable=gotype --deadline=10m ${EXTRA_ARGS_METALINTER} ./... | sed "s/^/[METALINTER_WARN] /" || true
+	@$(GOMETALINTER) --exclude="${EXCLUDES_METALINTER}" --vendor --disable=gotype --deadline=10m ${EXTRA_ARGS_METALINTER} ./... | sed "s/^/[METALINTER_WARN] /" || true
 
 .PHONY: metalinter_strict
 metalinter_strict: $(SOURCES) | $(GOMETALINTER)
-	$(GOMETALINTER) --exclude="${EXCLUDES_METALINTER}" --vendor --disable=gotype --deadline=10m ${EXTRA_ARGS_METALINTER} ./...
+	@$(GOMETALINTER) --exclude="${EXCLUDES_METALINTER}" --vendor --disable=gotype --deadline=10m ${EXTRA_ARGS_METALINTER} ./...
