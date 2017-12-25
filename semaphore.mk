@@ -9,6 +9,11 @@
 VERSION := $(shell git name-rev --tags --name-only `git rev-parse HEAD`)
 IS_DEFINED_VERSION := $(shell [ ! "${VERSION}" == "undefined" ] && echo true)
 
+GITHUB_RELEASE := ${GOPATH}/bin/github-release
+
+$(GITHUB_RELEASE):
+	go get -u github.com/aktau/github-release
+
 .PHONY: build_release_files
 build_release_files: ${RELEASE_SOURCES}
 
@@ -35,7 +40,7 @@ endif
 	$(MAKE) _release_to_github
 
 .PHONY: _release_to_github
-_release_to_github: ${RELEASE_SOURCES} | $(UPX)
+_release_to_github: ${RELEASE_SOURCES} | $(UPX) $(GITHUB_RELEASE)
 ifndef GITHUB_TOKEN
 	$(error GITHUB_TOKEN parameter must be set)
 endif
@@ -60,7 +65,7 @@ endif
 	github-release upload -u milanaleksic -r ${APP_NAME} --tag ${TAG} --name "${APP_NAME}-${TAG}-linux-arm" -f ${FULL_APP_PATH}
 
 .PHONY: ci
-ci: ${RELEASE_SOURCES}
+ci: ${RELEASE_SOURCES} | $(GITHUB_RELEASE)
 	rm $$GOPATH/src/$(PACKAGE) || true
 	mkdir -p $$GOPATH/src/$(PACKAGE)
 	rsync -ar --delete . $$GOPATH/src/$(PACKAGE)
@@ -70,19 +75,13 @@ ci: ${RELEASE_SOURCES}
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) deploy-if-tagged
 
 .PHONY: scrap_release
-scrap_release:
+scrap_release: | $(GITHUB_RELEASE)
 ifndef TAG
 	$(error TAG parameter must be set: make TAG=<TAG_VALUE>)
 endif
 	git tag -d ${TAG} || true
 	git push origin :${TAG} || true
 	github-release delete -u milanaleksic -r ${APP_NAME} --tag "${TAG}" || true
-
-.PHONY: prepare_github_release
-prepare_github_release: ${GOPATH}/bin/github-release
-
-${GOPATH}/bin/github-release:
-	go get github.com/aktau/github-release
 
 .PHONY: cd
 cd:
