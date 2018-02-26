@@ -13,9 +13,6 @@ set -e
 echo "Executing pre-push script: goimports"
 make goimports_check
 
-echo "Checking if a real version is being pushed in bindata" 
-make check_undefined_version
-
 echo "Executing pre-push script: metalinter_strict"
 make metalinter_strict
 
