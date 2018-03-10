@@ -8,6 +8,8 @@ RESOURCES_DIR ?= $(SOURCEDIR)
 
 DATA_DIR ?= $(RESOURCES_DIR)/data
 
+SOURCES_DATA := $(shell find $(DATA_DIR))
+
 PACKR_FILE ?= $(RESOURCES_DIR)/resources-packr.go
 
 PACKR := ${GOPATH}/bin/packr
@@ -15,7 +17,7 @@ PACKR := ${GOPATH}/bin/packr
 $(PACKR):
 	go get -u github.com/gobuffalo/packr/...
 
-${PACKR_FILE}: $(GOIMPORTS) $(PACKR)
+${PACKR_FILE}: ${SOURCES_DATA} | $(GOIMPORTS) $(PACKR)
 	@echo building debug bindata
 	@rm -rf ${PACKR_FILE}
 	@$(PACKR)
