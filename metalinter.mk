@@ -9,7 +9,7 @@ GOMETALINTER := ${GOPATH}/bin/gometalinter
 
 $(GOMETALINTER):
 	go get -u github.com/alecthomas/gometalinter
-	$(GOMETALINTER) --install --update
+	$(GOMETALINTER) --install
 
 .PHONY: metalinter
 metalinter: $(SOURCES) | $(GOMETALINTER)
