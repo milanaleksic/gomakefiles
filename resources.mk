@@ -15,7 +15,7 @@ PACKR := ${GOPATH}/bin/packr
 $(PACKR):
 	go get -u github.com/gobuffalo/packr/...
 
-${PACKR_FILE}: ${DATA_DIR} | $(GOIMPORTS) $(PACKR)
+${PACKR_FILE}: $(GOIMPORTS) $(PACKR)
 	@echo building debug bindata
 	@rm -rf ${PACKR_FILE}
 	@$(PACKR)
