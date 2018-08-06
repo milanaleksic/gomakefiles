@@ -10,7 +10,7 @@ DATA_DIR ?= $(RESOURCES_DIR)/data
 
 SOURCES_DATA := $(shell find $(DATA_DIR))
 
-PACKR_FILE ?= $(RESOURCES_DIR)/resources-packr.go
+PACKR_FILE ?= $(RESOURCES_DIR)/*resources-packr.go
 
 PACKR := ${GOPATH}/bin/packr
 
