@@ -52,6 +52,10 @@ ifndef TAG
 endif
 	$(MAKE) deploy_sol GOOS=linux GOARCH=amd64
 	$(MAKE) deploy_sol GOOS=linux GOARCH=arm
+ifdef ARM5ALSO
+	@echo "Making ARM5 binary also"
+	$(MAKE) deploy_sol GOOS=linux GOARCH=arm GOARM=5
+endif
 
 .PHONY: deploy_sol
 deploy_sol: ${RELEASE_SOURCES} | $(UPX)
