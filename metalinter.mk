@@ -8,7 +8,7 @@ EXTRA_ARGS_METALINTER :=
 GOMETALINTER := ${GOPATH}/bin/gometalinter
 
 $(GOMETALINTER):
-	go get -u github.com/alecthomas/gometalinter
+	curl -L https://git.io/vp6lP | sh
 	$(GOMETALINTER) --install
 
 .PHONY: metalinter
