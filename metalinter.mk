@@ -5,7 +5,7 @@
 
 EXCLUDES_METALINTER := ($(RESOURCES_DIR)/*resources-packr.go)|(.*_test.go)
 EXTRA_ARGS_METALINTER :=
-GOMETALINTER := ${GOPATH}/bin/gometalinter
+GOMETALINTER := ./bin/gometalinter
 
 $(GOMETALINTER):
 	curl -L https://git.io/vp6lP | sh
