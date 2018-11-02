@@ -9,7 +9,6 @@ GOMETALINTER := ./bin/gometalinter
 
 $(GOMETALINTER):
 	curl -L https://git.io/vp6lP | sh
-	$(GOMETALINTER) --install
 
 .PHONY: metalinter
 metalinter: $(SOURCES) | $(GOMETALINTER)
