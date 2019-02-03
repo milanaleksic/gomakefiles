@@ -25,6 +25,10 @@ run: ${FULL_APP_PATH}
 test:
 	go test -v $$(go list ./... | grep -v /vendor/) -short
 
+.PHONY: test_vendor
+test_vendor:
+	go test -mod=vendor -v $$(go list ./... | grep -v /vendor/) -short
+
 .PHONY: test_full
 test_full:
 	go test -v $$(go list ./... | grep -v /vendor/)

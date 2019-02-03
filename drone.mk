@@ -20,8 +20,8 @@ endif
 	mkdir -p $$GOPATH/src/$(PACKAGE)
 	rsync -ar --delete . $$GOPATH/src/$(PACKAGE)
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) metalinter
-	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) test
-	cd $$GOPATH/src/$(PACKAGE)/$(MAIN_APP_DIR) && go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}
+	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) test_vendor
+	cd $$GOPATH/src/$(PACKAGE)/$(MAIN_APP_DIR) && go build -mod=vendor -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) deploy-if-tagged
 
 .PHONY: deploy-if-tagged
