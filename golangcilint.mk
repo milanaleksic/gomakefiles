@@ -12,8 +12,8 @@ $(LINTER):
 
 .PHONY: metalinter
 metalinter: $(SOURCES) | $(LINTER)
-	$(LINTER) run --enable-all --issues-exit-code=0
+	$(LINTER) run --issues-exit-code=0
 
 .PHONY: metalinter_strict
 metalinter_strict: $(SOURCES) | $(LINTER)
-	$(LINTER) run --enable-all --issues-exit-code=1
+	$(LINTER) run --issues-exit-code=1
