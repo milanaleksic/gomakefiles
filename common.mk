@@ -7,7 +7,11 @@ MAIN_APP_DIR ?= .
 
 SHELL := /bin/bash
 
+ifndef GOPATH
+GOPATH := ${HOME}/go
+else
 GOPATH := ${GOPATH}
+endif
 
 FULL_APP_PATH := ${MAIN_APP_DIR}/${APP_NAME}
 
