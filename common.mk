@@ -5,7 +5,12 @@ SOURCEDIR = .
 
 MAIN_APP_DIR ?= .
 
-SHELL := /bin/bash
+SHELL := bash
+.ONESHELL:
+.SHELLFLAGS := -eu -o pipefail -c
+.DELETE_ON_ERROR:
+MAKEFLAGS += --warn-undefined-variables
+MAKEFLAGS += --no-builtin-rules
 
 ifndef GOPATH
 GOPATH := ${HOME}/go
