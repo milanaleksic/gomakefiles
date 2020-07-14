@@ -2,7 +2,7 @@
 #   GOPATH
 
 UPX_ARCH := $(shell if grep -q arm <(uname -m); then echo 'armeb'; else echo 'amd64'; fi)
-UPX_VERSION := 3.92
+UPX_VERSION := 3.96
 UPX := ./upx
 
 $(UPX):
