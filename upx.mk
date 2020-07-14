@@ -6,7 +6,7 @@ UPX_VERSION := 3.96
 UPX := ./upx
 
 $(UPX):
-	if [ "$$(upx -V > /dev/null 2>&1 && echo OK)" == "OK" ]; \
+	@if [ "$$(upx -V > /dev/null 2>&1 && echo OK)" == "OK" ]; \
 	then \
 		ln -s $(shell which upx) upx; \
 	elif [ "${UPX_ARCH}" == "amd64" ]; \

@@ -6,7 +6,8 @@ SOURCEDIR = .
 MAIN_APP_DIR ?= .
 
 SHELL := bash
-.ONESHELL:
+# maybe uncomment, but watchout for all the "cd" commands
+#.ONESHELL:
 .SHELLFLAGS := -eu -o pipefail -c
 .DELETE_ON_ERROR:
 MAKEFLAGS += --warn-undefined-variables
