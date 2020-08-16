@@ -12,18 +12,18 @@ SOURCES_DATA := $(shell find $(DATA_DIR))
 
 PACKR_FILE ?= $(RESOURCES_DIR)/*resources-packr.go
 
-PACKR := ${GOPATH}/bin/packr
+PACKR := ${GOPATH}/bin/packr2
 
 $(PACKR):
-	go get -u github.com/gobuffalo/packr/...
+	go get -u github.com/gobuffalo/packr/v2...
 
 ${PACKR_FILE}: ${SOURCES_DATA} | $(GOIMPORTS) $(PACKR)
 	@echo building debug bindata
 	@rm -rf ${PACKR_FILE}
-	@$(PACKR)
+	@cd $(RESOURCES_DIR) && $(PACKR)
 	@$(GOIMPORTS) -w ${PACKR_FILE}
 
 .PHONY: clean_packr
 clean_packr: $(PACKR)
 	@echo cleaning packr
-	@packr clean
+	@packr2 clean
