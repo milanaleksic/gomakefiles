@@ -17,3 +17,7 @@ metalinter: $(SOURCES) | $(LINTER)
 .PHONY: metalinter_strict
 metalinter_strict: $(SOURCES) | $(LINTER)
 	$(LINTER) run --issues-exit-code=1
+
+.PHONY: metalinter_fix
+metalinter_fix: $(SOURCES) | $(LINTER)
+	$(LINTER) run --issues-exit-code=1 --fix

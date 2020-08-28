@@ -15,3 +15,7 @@ goimports_check: | $(GOIMPORTS)
 		$(GOIMPORTS) -l . | grep -v vendor; \
 		exit 1; \
 	fi
+
+.PHONY: goimports
+goimports: | $(GOIMPORTS)
+	$(GOIMPORTS) -w .
