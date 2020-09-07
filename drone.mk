@@ -19,6 +19,22 @@ endif
 	rm $$GOPATH/src/$(PACKAGE) || true
 	mkdir -p $$GOPATH/src/$(PACKAGE)
 	rsync -ar --delete . $$GOPATH/src/$(PACKAGE)
+	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) metalinter_strict
+	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) test
+	cd $$GOPATH/src/$(PACKAGE)/$(MAIN_APP_DIR) && go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}
+	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) deploy-if-tagged
+
+.PHONY: ci_non_strict
+ci_non_strict: ${RELEASE_SOURCES}
+ifndef SOL_USERNAME
+	$(error SOL_USERNAME parameter must be set: make SOL_USERNAME=<SOL_USERNAME_VALUE>)
+endif
+ifndef SOL_PASSWORD
+	$(error SOL_PASSWORD parameter must be set: make SOL_PASSWORD=<SOL_PASSWORD_VALUE>)
+endif
+	rm $$GOPATH/src/$(PACKAGE) || true
+	mkdir -p $$GOPATH/src/$(PACKAGE)
+	rsync -ar --delete . $$GOPATH/src/$(PACKAGE)
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) metalinter
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) test
 	cd $$GOPATH/src/$(PACKAGE)/$(MAIN_APP_DIR) && go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}
