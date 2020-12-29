@@ -21,6 +21,7 @@ endif
 	rsync -ar --delete . $$GOPATH/src/$(PACKAGE)
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) metalinter_strict
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) test
+	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) int
 	cd $$GOPATH/src/$(PACKAGE)/$(MAIN_APP_DIR) && go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) deploy-if-tagged
 
