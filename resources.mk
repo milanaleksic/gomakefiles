@@ -15,7 +15,7 @@ PACKR_FILE ?= $(RESOURCES_DIR)/*resources-packr.go
 PACKR := ${GOPATH}/bin/packr2
 
 $(PACKR):
-	go get -u github.com/gobuffalo/packr/v2
+	go get -u github.com/gobuffalo/packr/v2/packr2
 
 ${PACKR_FILE}: ${SOURCES_DATA} | $(GOIMPORTS) $(PACKR)
 	@echo building debug bindata
