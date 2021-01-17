@@ -6,6 +6,10 @@
 #   PACKAGE - what is the full package name for this go application?
 #   MAIN_APP_DIR - what is the location from this Makefile of the main package that we consider main deployment artifact?
 
+# Drone CI starts the image with code inside /drone/src/
+# This script copies that code into the directory $$GOPATH/src/$(PACKAGE)
+# TODO: remove the copy, stay inside the /drone/src/
+
 include gomakefiles/drone_version.mk
 
 .PHONY: ci
