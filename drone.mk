@@ -82,7 +82,7 @@ endif
 deploy_sol: ${RELEASE_SOURCES} | $(UPX)
 	@echo Building and shipping ${GOOS} ${GOARCH}
 	cd ${MAIN_APP_DIR} && go build -ldflags '-s -w -X main.Version=${TAG}' -o ${APP_NAME}
-	$(UPX) -q $(FULL_APP_PATH)
+	$(UPX) -2 -q $(FULL_APP_PATH)
 	@curl -X MKCOL --anyauth --user '${SOL_USERNAME}:${SOL_PASSWORD}' '${SOL_LOCATION}/${APP_NAME}'
 	@curl -X PUT --anyauth --user '${SOL_USERNAME}:${SOL_PASSWORD}' -T $(FULL_APP_PATH) '${SOL_LOCATION}/${APP_NAME}/${APP_NAME}-${TAG}-${GOOS}-${GOARCH}'
 
