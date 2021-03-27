@@ -11,13 +11,13 @@ $(LINTER):
 	@curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh |  sh -s -- -b $$GOPATH/bin ${LINTER_VERSION}
 
 .PHONY: metalinter
-metalinter: $(SOURCES) | $(LINTER)
+metalinter: $(LINTER)
 	$(LINTER) run --issues-exit-code=0
 
 .PHONY: metalinter_strict
-metalinter_strict: $(SOURCES) | $(LINTER)
+metalinter_strict: $(LINTER)
 	$(LINTER) run --issues-exit-code=1
 
 .PHONY: metalinter_fix
-metalinter_fix: $(SOURCES) | $(LINTER)
+metalinter_fix: $(LINTER)
 	$(LINTER) run --issues-exit-code=1 --fix
