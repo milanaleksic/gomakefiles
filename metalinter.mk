@@ -8,7 +8,7 @@ EXTRA_ARGS_METALINTER :=
 GOMETALINTER := ./bin/gometalinter
 
 $(GOMETALINTER):
-	curl -L https://git.io/vp6lP | sh
+	curl -fL https://git.io/vp6lP | sh
 
 .PHONY: metalinter
 metalinter: $(SOURCES) | $(GOMETALINTER)

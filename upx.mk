@@ -12,7 +12,7 @@ $(UPX):
 	elif [ "${UPX_ARCH}" == "amd64" ]; \
 	then \
 	    echo Installing UPX; \
-		curl -L --silent https://github.com/upx/upx/releases/download/v${UPX_VERSION}/upx-${UPX_VERSION}-${UPX_ARCH}_linux.tar.xz | tar xJf - && \
+		curl -fL --silent https://github.com/upx/upx/releases/download/v${UPX_VERSION}/upx-${UPX_VERSION}-${UPX_ARCH}_linux.tar.xz | tar xJf - && \
 		mv upx-${UPX_VERSION}-${UPX_ARCH}_linux/upx upx && \
 		rm -rf upx-${UPX_VERSION}-${UPX_ARCH}_linux; \
 	else \
