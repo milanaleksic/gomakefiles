@@ -12,5 +12,5 @@ SOURCES_DATA := $(shell find $(DATA_DIR))
 RESOURCES_SIGNAL_GO ?= $(RESOURCES_DIR)/signal.go
 
 ${RESOURCES_SIGNAL_GO}: $(SOURCES_DATA)
-	@echo sinaling that changes have ocurred by updating signal.go
+	@echo Signaling that resource changes have ocurred by updating signal.go
 	@echo "package $$(basename `dirname ${RESOURCES_SIGNAL_GO}`)" > ${RESOURCES_SIGNAL_GO}
