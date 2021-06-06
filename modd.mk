@@ -4,7 +4,7 @@
 
 DEVD := ${GOPATH}/bin/devd
 $(DEVD):
-	go get github.com/milanaleksic/devd/cmd/devd@v1.0.2
+	go get github.com/milanaleksic/devd/cmd/devd@v1.0.3
 
 MODD := ${GOPATH}/bin/modd
 $(MODD):
