@@ -4,11 +4,11 @@
 
 DEVD := ${GOPATH}/bin/devd
 $(DEVD):
-	go get github.com/milanaleksic/devd/cmd/devd@v1.0.3
+	go install github.com/milanaleksic/devd/cmd/devd@v1.0.3
 
 MODD := ${GOPATH}/bin/modd
 $(MODD):
-	go get github.com/cortesi/modd/cmd/modd
+	go install github.com/cortesi/modd/cmd/modd@v0.0.0-20210323234521-b35eddab86cc
 
 .PHONY: dev
 dev: $(DEVD) $(MODD)

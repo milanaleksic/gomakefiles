@@ -7,4 +7,4 @@ WIRE := ${GOPATH}/bin/wire
 
 $(WIRE):
 	@echo "wire NOT FOUND: $(WIRE)"
-	@go get -u github.com/google/wire/cmd/wire
+	@go install github.com/google/wire/cmd/wire@v0.5.0
