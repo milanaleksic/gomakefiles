@@ -8,8 +8,8 @@ $(DEVD):
 
 MODD := ${GOPATH}/bin/modd
 $(MODD):
-	go get github.com/cortesi/modd
+	go get github.com/cortesi/modd/cmd/modd
 
 .PHONY: dev
-dev: $(DEVD)
+dev: $(DEVD) $(MODD)
 	$(MODD)
