@@ -3,12 +3,12 @@
 #   GOPATH
 #   RESOURCES_DIR - where is bindata resources directory (where are bindata GO files generated)
 
-LINTER_VERSION ?= v1.31.0
+GOLANGCILINT_VERSION ?= v1.31.0
 LINTER := ${GOPATH}/bin/golangci-lint
 
 $(LINTER):
 	@echo "LINTER NOT FOUND: $(LINTER)"
-	@curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh |  sh -s -- -b $$GOPATH/bin ${LINTER_VERSION}
+	@curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh |  sh -s -- -b $$GOPATH/bin ${GOLANGCILINT_VERSION}
 
 .PHONY: metalinter
 metalinter: $(LINTER)
