@@ -8,7 +8,7 @@ LINTER := ${GOPATH}/bin/golangci-lint
 
 $(LINTER):
 	@echo "LINTER NOT FOUND: $(LINTER)"
-	@curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh |  sh -s -- -b $$GOPATH/bin ${GOLANGCILINT_VERSION}
+	@curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh |  sh -s -- -b $(GOPATH)/bin ${GOLANGCILINT_VERSION}
 
 .PHONY: metalinter
 metalinter: $(LINTER)
