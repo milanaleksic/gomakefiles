@@ -18,7 +18,7 @@ release-local:
 	$(GORELEASER) build --single-target
 
 .PHONY: ci
-ci: ${RELEASE_SOURCES}
+ci: ${RELEASE_SOURCES} | $(GORELEASER)
 	$(GORELEASER) release
 
 .PHONY: cd
