@@ -6,5 +6,5 @@
 WIRE := ${GOPATH}/bin/wire
 
 $(WIRE):
-	@echo "wire NOT FOUND: $(WIRE)"
+	@echo "installing 'wire' executable: $(WIRE) version $(WIRE_VERSION)"
 	@go install github.com/google/wire/cmd/wire@$(WIRE_VERSION)
