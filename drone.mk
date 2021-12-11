@@ -73,6 +73,7 @@ ifndef TAG
 endif
 	$(MAKE) deploy_sol GOOS=linux GOARCH=amd64
 	$(MAKE) deploy_sol GOOS=linux GOARCH=arm
+	$(MAKE) deploy_sol GOOS=linux GOARCH=arm64
 ifdef ARM5ALSO
 	@echo "Making ARM5 binary also"
 	$(MAKE) deploy_sol GOOS=linux GOARCH=arm GOARM=5
