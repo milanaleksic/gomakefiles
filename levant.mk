@@ -9,4 +9,4 @@ cd-levant: $(LEVANT)
 ifndef LEVANT_TARGET
 	$(error LEVANT_TARGET parameter must be set: make LEVANT_TARGET=<LEVANT_TARGET_VALUE>)
 endif
-	$(LEVANT) deploy $(LEVANT_TARGET)
+	$(LEVANT) deploy -var-file=$(LEVANT_VAR_FILE) $(LEVANT_TARGET)
