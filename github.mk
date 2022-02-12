@@ -6,11 +6,12 @@
 #   PACKAGE - what is the full package name for this go application?
 #   MAIN_APP_DIR - what is the location from this Makefile of the main package that we consider main deployment artifact?
 
-GORELEASER := ${GOPATH}/bin/goreleaser
+GORELEASER := $(SOURCEDIR)/goreleaser
 
 $(GORELEASER):
-	@echo "installing 'goreleaser' executable: $(GORELEASER) version $(GORELEASER_VERSION)"
-	go install github.com/goreleaser/goreleaser@$(GORELEASER_VERSION)
+	@echo "downloading 'goreleaser' executable: $(GORELEASER) version $(GORELEASER_VERSION)"
+	@curl -LO https://github.com/goreleaser/goreleaser/releases/download/$(GORELEASER_VERSION)/goreleaser_Linux_x86_64.tar.gz
+	@tar xzvf goreleaser_Linux_x86_64.tar.gz goreleaser
 
 .PHONY: release-local
 release-local:
