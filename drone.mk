@@ -104,3 +104,12 @@ endif
 ifeq ($(IS_REAL_VERSION),true)
 	curl --fail -X POST https://misc.milanaleksic.net/bastion/deploy?value=${VERSION} --header 'Authorization: Token ${BASTION_TOKEN}'
 endif
+
+.PHONY: cd-levant-drone
+cd-levant-drone: $(LEVANT)
+ifndef LEVANT_TARGET
+	$(error LEVANT_TARGET parameter must be set: make LEVANT_TARGET=<LEVANT_TARGET_VALUE>)
+endif
+ifeq ($(IS_REAL_VERSION),true)
+	export VERSION=${VERSION} && $(LEVANT) deploy -var-file=$(LEVANT_VAR_FILE) $(LEVANT_TARGET)
+endif
