@@ -12,6 +12,7 @@ $(GORELEASER):
 	@echo "downloading 'goreleaser' executable: $(GORELEASER) version $(GORELEASER_VERSION)"
 	@curl -LO https://github.com/goreleaser/goreleaser/releases/download/$(GORELEASER_VERSION)/goreleaser_Linux_x86_64.tar.gz
 	@tar xzvf goreleaser_Linux_x86_64.tar.gz goreleaser
+	@rm -rf goreleaser_Linux_x86_64.tar.gz
 
 .PHONY: release-local
 release-local:
