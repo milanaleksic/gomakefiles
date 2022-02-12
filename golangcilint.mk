@@ -8,7 +8,7 @@ LINTER := ${GOPATH}/bin/golangci-lint
 
 $(LINTER):
 	@echo "installing 'golangci-lint' executable: $(LINTER) version $(GOLANGCILINT_VERSION)"
-	@curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh |  sh -s -- -b $(GOPATH)/bin $(GOLANGCILINT_VERSION)
+	@curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh |  sh -s -- -b $(GOPATH)/bin $(GOLANGCILINT_VERSION)
 
 .PHONY: metalinter
 metalinter: $(LINTER)
