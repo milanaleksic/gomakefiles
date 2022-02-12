@@ -6,4 +6,7 @@ $(LEVANT):
 
 .PHONY: cd-levant
 cd-levant: $(LEVANT)
-	$(LEVANT) .github/workflows/thoughttrain.nomad
+ifndef LEVANT_TARGET
+	$(error LEVANT_TARGET parameter must be set: make LEVANT_TARGET=<LEVANT_TARGET_VALUE>)
+endif
+	$(LEVANT) deploy $(LEVANT_TARGET)
