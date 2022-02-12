@@ -4,7 +4,7 @@
 WAGO := ${GOPATH}/bin/wago
 
 $(WAGO):
-	go get github.com/milanaleksic/wago
+	go install github.com/milanaleksic/wago@latest
 
 DIRECTORIES_WITH_GO_TO_WATCH := $(shell find $(SOURCEDIR) -maxdepth 1 -type d \
 	-not -path ./gomakefiles \

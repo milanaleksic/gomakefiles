@@ -12,7 +12,7 @@ IS_DEFINED_VERSION := $(shell [ ! "${VERSION}" == "undefined" ] && echo true)
 GITHUB_RELEASE := ${GOPATH}/bin/github-release
 
 $(GITHUB_RELEASE):
-	go get -u github.com/aktau/github-release
+	go install github.com/aktau/github-release@latest
 
 .PHONY: build_release_files
 build_release_files: ${RELEASE_SOURCES}

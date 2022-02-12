@@ -4,7 +4,7 @@
 GOIMPORTS := ${GOPATH}/bin/goimports
 
 $(GOIMPORTS):
-	go get -u golang.org/x/tools/cmd/goimports
+	go install golang.org/x/tools/cmd/goimports@latest
 
 .PHONY: goimports_check
 goimports_check: | $(GOIMPORTS)
