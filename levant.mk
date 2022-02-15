@@ -23,6 +23,7 @@ endif
 ifeq ($(IS_REAL_VERSION),true)
 	export VERSION=${VERSION} && \
 		$(LEVANT) deploy \
+			-log-level=WARN \
 			$(LEVANT_ARG_VAR_FILE) \
 			$(LEVANT_ARG_CONSUL_ADDRESS) \
 			$(LEVANT_TARGET)
