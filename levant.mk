@@ -21,5 +21,9 @@ ifndef LEVANT_TARGET
 	$(error LEVANT_TARGET parameter must be set: make LEVANT_TARGET=<LEVANT_TARGET_VALUE>)
 endif
 ifeq ($(IS_REAL_VERSION),true)
-	export VERSION=${VERSION} && $(LEVANT) $(LEVANT_ARG_VAR_FILE) $(LEVANT_ARG_CONSUL_ADDRESS) deploy $(LEVANT_TARGET)
+	export VERSION=${VERSION} && \
+		$(LEVANT) deploy \
+			$(LEVANT_ARG_VAR_FILE) \
+			$(LEVANT_ARG_CONSUL_ADDRESS) \
+			$(LEVANT_TARGET)
 endif
