@@ -49,7 +49,18 @@ endif
 .PHONY: deploy-if-tagged
 deploy-if-tagged: ${RELEASE_SOURCES}
 ifeq ($(IS_REAL_VERSION),true)
-	$(MAKE) _deploy_to_sol TAG=$(VERSION)
+ifeq ($(IS_DOCKER),true)
+	# for this to work you need a "multiarch" builder
+	docker \
+		buildx --builder multiarch \
+		build \
+	    --platform linux/amd64,linux/arm64 \
+	    --build-arg VERSION=${VERSION} \
+	    -t ${DOCKER_IMAGE}:${VERSION} \
+	    --push .
+else
+	$(MAKE) _deploy_docker TAG=$(VERSION)
+endif
 else
 	@echo "No deployment since version is undefined"
 endif
