@@ -32,12 +32,6 @@ endif
 
 .PHONY: ci_non_strict
 ci_non_strict: ${RELEASE_SOURCES}
-ifndef SOL_USERNAME
-	$(error SOL_USERNAME parameter must be set: make SOL_USERNAME=<SOL_USERNAME_VALUE>)
-endif
-ifndef SOL_PASSWORD
-	$(error SOL_PASSWORD parameter must be set: make SOL_PASSWORD=<SOL_PASSWORD_VALUE>)
-endif
 	rm $$GOPATH/src/$(PACKAGE) || true
 	mkdir -p $$GOPATH/src/$(PACKAGE)
 	rsync -ar --delete . $$GOPATH/src/$(PACKAGE)
@@ -59,7 +53,7 @@ ifeq ($(IS_DOCKER),true)
 	    -t ${DOCKER_IMAGE}:${VERSION} \
 	    --push .
 else
-	$(MAKE) _deploy_docker TAG=$(VERSION)
+	$(MAKE) _deploy_to_sol TAG=$(VERSION)
 endif
 else
 	@echo "No deployment since version is undefined"
@@ -80,6 +74,12 @@ endif
 
 .PHONY: _deploy_to_sol
 _deploy_to_sol: ${RELEASE_SOURCES}
+ifndef SOL_USERNAME
+	$(error SOL_USERNAME parameter must be set: make SOL_USERNAME=<SOL_USERNAME_VALUE>)
+endif
+ifndef SOL_PASSWORD
+	$(error SOL_PASSWORD parameter must be set: make SOL_PASSWORD=<SOL_PASSWORD_VALUE>)
+endif
 ifndef TAG
 	$(error TAG parameter must be set: make TAG=<TAG_VALUE>)
 endif
