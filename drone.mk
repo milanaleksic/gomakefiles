@@ -44,11 +44,10 @@ ci_non_strict: ${RELEASE_SOURCES}
 deploy-if-tagged:
 ifeq ($(IS_REAL_VERSION),true)
 ifeq ($(IS_DOCKER),true)
-	# for this to work you need a "multiarch" builder
+	docker buildx create --name multiarch --platform linux/arm64,linux/amd64
 	docker \
 		buildx --builder multiarch \
 		build \
-		-e DOCKER_HOST \
 	    --platform linux/amd64,linux/arm64 \
 	    --build-arg VERSION=${VERSION} \
 	    -t ${DOCKER_IMAGE}:${VERSION} \
