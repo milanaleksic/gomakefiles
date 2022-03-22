@@ -41,7 +41,7 @@ ci_non_strict: ${RELEASE_SOURCES}
 	cd $$GOPATH/src/$(PACKAGE) && $(MAKE) deploy-if-tagged
 
 .PHONY: deploy-if-tagged
-deploy-if-tagged: ${RELEASE_SOURCES}
+deploy-if-tagged:
 ifeq ($(IS_REAL_VERSION),true)
 ifeq ($(IS_DOCKER),true)
 	# for this to work you need a "multiarch" builder
