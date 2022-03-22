@@ -10,8 +10,6 @@
 # This script copies that code into the directory $$GOPATH/src/$(PACKAGE)
 # TODO: remove the copy, stay inside the /drone/src/
 
-include gomakefiles/drone_version.mk
-
 .PHONY: ci
 ci: ${RELEASE_SOURCES}
 ifndef SOL_USERNAME
