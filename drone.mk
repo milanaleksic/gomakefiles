@@ -48,6 +48,7 @@ ifeq ($(IS_DOCKER),true)
 	docker \
 		buildx --builder multiarch \
 		build \
+		-e DOCKER_HOST \
 	    --platform linux/amd64,linux/arm64 \
 	    --build-arg VERSION=${VERSION} \
 	    -t ${DOCKER_IMAGE}:${VERSION} \
