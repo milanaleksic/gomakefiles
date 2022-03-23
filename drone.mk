@@ -116,3 +116,6 @@ endif
 ifeq ($(IS_REAL_VERSION),true)
 	curl --fail -X POST https://misc.milanaleksic.net/bastion/deploy?value=${VERSION} --header 'Authorization: Token ${BASTION_TOKEN}'
 endif
+
+.PHONY: prepare-deploy
+prepare-deploy: ${RELEASE_SOURCES}
