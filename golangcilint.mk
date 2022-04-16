@@ -3,7 +3,7 @@
 #   GOPATH
 #   RESOURCES_DIR - where is bindata resources directory (where are bindata GO files generated)
 
-GOLANGCILINT_VERSION ?= v1.31.0
+GOLANGCILINT_VERSION ?= v1.45.2
 LINTER := ${GOPATH}/bin/golangci-lint
 
 $(LINTER):
