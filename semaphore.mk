@@ -83,12 +83,3 @@ endif
 	git tag -d ${TAG} || true
 	git push origin :${TAG} || true
 	github-release delete -u milanaleksic -r ${APP_NAME} --tag "${TAG}" || true
-
-.PHONY: cd
-cd:
-ifndef BASTION_TOKEN
-	$(error BASTION_TOKEN parameter must be set: make BASTION_TOKEN=<BASTION_TOKEN_VALUE>)
-endif
-ifeq ($(IS_DEFINED_VERSION),true)
-	curl --fail -X POST https://misc.milanaleksic.net/bastion/deploy?value=${VERSION} --header 'Authorization: Token ${BASTION_TOKEN}'
-endif
