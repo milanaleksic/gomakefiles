@@ -12,12 +12,27 @@ $(LINTER):
 
 .PHONY: metalinter
 metalinter: $(LINTER)
-	$(LINTER) run --issues-exit-code=0
+	@if [ -f go.work ]; \
+	then \
+		$(LINTER) run --issues-exit-code=0 --out-format=github-actions -- $$(go work edit -json | jq -c -r '[.Use[].DiskPath] | map_values(. + "/...")[]'); \
+	else \
+		$(LINTER) run --issues-exit-code=0; \
+	fi
 
 .PHONY: metalinter_strict
 metalinter_strict: $(LINTER)
-	$(LINTER) run --issues-exit-code=1
+	@if [ -f go.work ]; \
+	then \
+		$(LINTER) run --issues-exit-code=1 --out-format=github-actions -- $$(go work edit -json | jq -c -r '[.Use[].DiskPath] | map_values(. + "/...")[]'); \
+	else \
+		$(LINTER) run --issues-exit-code=1; \
+	fi
 
 .PHONY: metalinter_fix
 metalinter_fix: $(LINTER)
-	$(LINTER) run --issues-exit-code=1 --fix
+	@if [ -f go.work ]; \
+	then \
+		$(LINTER) run --issues-exit-code=1 --fix --out-format=github-actions -- $$(go work edit -json | jq -c -r '[.Use[].DiskPath] | map_values(. + "/...")[]'); \
+	else \
+		$(LINTER) run --issues-exit-code=1 --fix; \
+	fi
