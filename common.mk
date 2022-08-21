@@ -33,11 +33,21 @@ run: ${FULL_APP_PATH}
 
 .PHONY: test
 test:
-	go test -v $$(go list ./... | grep -v /vendor/) -short
+	@if [ -f go.work ]; \
+	then \
+		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... -short; \
+	else \
+		go test -v $$(go list ./... | grep -v /vendor/) -short; \
+	fi
 
 .PHONY: int
 int:
-	go test $(SOURCEDIR)/... --tags integration --count=1
+	@if [ -f go.work ]; \
+	then \
+		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... --tags integration --count=1; \
+	else \
+		go test $(SOURCEDIR)/... --tags integration --count=1; \
+	fi
 
 .PHONY: test_vendor
 test_vendor:
