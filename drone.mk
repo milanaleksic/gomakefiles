@@ -46,6 +46,9 @@ deploy-if-tagged:
 ifeq ($(IS_REAL_VERSION),true)
 ifeq ($(IS_DOCKER),true)
 	docker buildx create --name multiarch --platform linux/arm64,linux/amd64
+ifeq ($(IS_DOCKER_LOGIN),true)
+	echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin ${DOCKER_REGISTRY}
+endif
 	docker \
 		buildx --builder multiarch \
 		build \
