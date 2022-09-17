@@ -45,7 +45,7 @@ ci_non_strict: ${RELEASE_SOURCES}
 deploy-if-tagged:
 ifeq ($(IS_REAL_VERSION),true)
 ifeq ($(IS_DOCKER),true)
-	docker buildx create --name multiarch --platform linux/arm64,linux/amd64
+	docker buildx create --name multiarch --platform linux/arm64,linux/amd64 || true
 ifeq ($(IS_DOCKER_LOGIN),true)
 	echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin ${DOCKER_REGISTRY}
 endif
