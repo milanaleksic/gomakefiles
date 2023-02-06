@@ -19,6 +19,13 @@ else
 GOPATH := ${GOPATH}
 endif
 
+TPARSE := ${GOPATH}/bin/tparse
+TPARSE_VERSION := "v0.11.1"
+
+$(TPARSE):
+	@echo "installing 'tparse' executable: $(TPARSE) version $(TPARSE_VERSION)"
+	go install github.com/mfridman/tparse@$(TPARSE_VERSION)
+
 FULL_APP_PATH := ${MAIN_APP_DIR}/${APP_NAME}
 
 GOMAKEFILES_DIR = $(notdir $(patsubst %/,%,$(dir $(abspath $(filter %/common.mk,$(MAKEFILE_LIST))))))
@@ -32,12 +39,12 @@ run: ${FULL_APP_PATH}
 	${FULL_APP_PATH} ${RUN_APP_ARGS}
 
 .PHONY: test
-test:
+test: $(TPARSE)
 	@if [ -f go.work ]; \
 	then \
-		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... -short; \
+		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... -json | $(TPARSE) -all; \
 	else \
-		go test -v $$(go list ./... | grep -v /vendor/) -short; \
+		go test -v $$(go list ./... | grep -v /vendor/) -json | $(TPARSE) -all; \
 	fi
 
 .PHONY: int
