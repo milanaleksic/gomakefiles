@@ -48,12 +48,12 @@ test: $(TPARSE)
 	fi
 
 .PHONY: int
-int:
+int: $(TPARSE)
 	@if [ -f go.work ]; \
 	then \
-		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... --tags integration --count=1; \
+		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... --tags integration --count=1 -json | $(TPARSE) -all; \
 	else \
-		go test $(SOURCEDIR)/... --tags integration --count=1; \
+		go test $(SOURCEDIR)/... --tags integration --count=1 -json | $(TPARSE) -all; \
 	fi
 
 .PHONY: test_vendor
