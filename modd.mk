@@ -2,7 +2,7 @@
 #   GOPATH
 #   modd.conf file in the project root
 
-DEVD_VERSION := 'v1.0.3'
+DEVD_VERSION := 'v1.0.4'
 
 DEVD := ${GOPATH}/bin/devd
 $(DEVD):
