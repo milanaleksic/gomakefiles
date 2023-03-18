@@ -10,7 +10,7 @@ ifndef NOMAD_TARGET
 	$(error NOMAD_TARGET parameter must be set: make NOMAD_TARGET=<NOMAD_TARGET_VALUE>)
 endif
 ifeq ($(IS_REAL_VERSION),true)
-	export $(NOMAD) deploy \
+	export $(NOMAD) run \
 			-log-level=WARN \
 			-var image_version=${VERSION} \
 			$(NOMAD_EXTRA_ARGS) \
