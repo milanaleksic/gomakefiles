@@ -11,7 +11,6 @@ ifndef NOMAD_TARGET
 endif
 ifeq ($(IS_REAL_VERSION),true)
 	export $(NOMAD) run \
-			-log-level=WARN \
 			-var image_version=${VERSION} \
 			$(NOMAD_EXTRA_ARGS) \
 			$(NOMAD_TARGET)
