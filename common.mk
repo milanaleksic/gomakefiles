@@ -34,6 +34,12 @@ GOMAKEFILES_DIR = $(notdir $(patsubst %/,%,$(dir $(abspath $(filter %/common.mk,
 
 RUN_APP_ARGS := ""
 
+ifdef TESTING_WITH_COVERAGE
+COVER_PROFILE := "-coverprofile=coverage.txt"
+else
+COVER_PROFILE := ""
+endif
+
 .PHONY: run
 run: ${FULL_APP_PATH}
 	${FULL_APP_PATH} ${RUN_APP_ARGS}
@@ -42,18 +48,18 @@ run: ${FULL_APP_PATH}
 test: $(TPARSE)
 	@if [ -f go.work ]; \
 	then \
-		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... -json | $(TPARSE) -all; \
+		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... $(COVER_PROFILE) -json | $(TPARSE) -all; \
 	else \
-		go test -v $$(go list ./... | grep -v /vendor/) -json | $(TPARSE) -all; \
+		go test -v $$(go list ./... | grep -v /vendor/) $(COVER_PROFILE) -json | $(TPARSE) -all; \
 	fi
 
 .PHONY: int
 int: $(TPARSE)
 	@if [ -f go.work ]; \
 	then \
-		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... --tags integration --count=1 -json | $(TPARSE) -all; \
+		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... --tags integration $(COVER_PROFILE) --count=1 -json | $(TPARSE) -all; \
 	else \
-		go test $(SOURCEDIR)/... --tags integration --count=1 -coverprofile=coverage.txt -json | $(TPARSE) -all; \
+		go test $(SOURCEDIR)/... --tags integration --count=1 $(COVER_PROFILE) -json | $(TPARSE) -all; \
 	fi
 
 .PHONY: test_vendor
