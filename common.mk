@@ -53,7 +53,7 @@ int: $(TPARSE)
 	then \
 		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... --tags integration --count=1 -json | $(TPARSE) -all; \
 	else \
-		go test $(SOURCEDIR)/... --tags integration --count=1 -json | $(TPARSE) -all; \
+		go test $(SOURCEDIR)/... --tags integration --count=1 -coverprofile=coverage.txt -json | $(TPARSE) -all; \
 	fi
 
 .PHONY: test_vendor
