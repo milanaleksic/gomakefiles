@@ -8,5 +8,10 @@ $(GOVULNCHECK):
 	@go install golang.org/x/vuln/cmd/govulncheck@latest
 
 .PHONY: govulncheck
-govulncheck:
-	govulncheck ./...
+govulncheck: $(GOVULNCHECK)
+	@if [ -f go.work ]; \
+	then \
+		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} govulncheck -v {}/... ; \
+	else \
+		govulncheck $(SOURCEDIR)/... ; \
+	fi
