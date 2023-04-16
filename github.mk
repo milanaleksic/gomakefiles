@@ -10,7 +10,8 @@ GORELEASER := ${GOPATH}/bin/goreleaser
 
 $(GORELEASER):
 	@echo "downloading 'goreleaser' executable version $(GORELEASER_VERSION)"
-	@go install github.com/goreleaser/goreleaser@$(GORELEASER_VERSION)
+	@VERSION=$(GORELEASER_VERSION) \
+		curl -sfL https://goreleaser.com/static/run | bash
 
 .PHONY: release-local
 release-local: $(GORELEASER)
