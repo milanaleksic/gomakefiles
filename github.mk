@@ -15,7 +15,8 @@ $(GORELEASER):
 		echo "using archive $${TAR_FILE}" && \
 		curl -sfLo "$${TAR_FILE}" \
 		  "https://github.com/goreleaser/goreleaser/releases/download/$(GORELEASER_VERSION)/goreleaser_$$(uname -s)_$$(uname -m).tar.gz"  && \
-		tar -xf "$${TAR_FILE}" -C . $(GORELEASER)
+		tar -xf "$${TAR_FILE}" goreleaser && \
+		mv $${TMPDIR}/goreleaser $(GORELEASER)
 
 .PHONY: release-local
 release-local: $(GORELEASER)
