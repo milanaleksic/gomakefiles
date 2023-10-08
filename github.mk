@@ -6,7 +6,7 @@
 #   PACKAGE - what is the full package name for this go application?
 #   MAIN_APP_DIR - what is the location from this Makefile of the main package that we consider main deployment artifact?
 
-GORELEASER := ${TOOLSDIR}/goreleaser
+GORELEASER := ${TOOLS_DIR}/goreleaser
 
 $(GORELEASER):
 	@echo "downloading 'goreleaser' executable version $(GORELEASER_VERSION)"
