@@ -22,6 +22,8 @@ endif
 TPARSE := ${GOPATH}/bin/tparse
 TPARSE_VERSION := "v0.11.1"
 
+TOOLS_DIR := $(SOURCEDIR)
+
 $(TPARSE):
 	@echo "installing 'tparse' executable: $(TPARSE) version $(TPARSE_VERSION)"
 	go install github.com/mfridman/tparse@$(TPARSE_VERSION)
