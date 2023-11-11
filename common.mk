@@ -41,36 +41,44 @@ ifdef TESTING_WITH_COVERAGE
 test: $(TPARSE)
 	@if [ -f go.work ]; \
 	then \
-		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... -coverprofile={}/coverage.txt -json | $(TPARSE) -all; \
+		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... -coverprofile={}/coverage.txt -json > test_output.json; \
+		$(TPARSE) -all -file=test_output.json; \
 	else \
-		go test -v $$(go list ./... | grep -v /vendor/) -coverprofile=coverage.txt -json | $(TPARSE) -all; \
+		go test -v $$(go list ./... | grep -v /vendor/) -coverprofile=coverage.txt -json > test_output.json; \
+		$(TPARSE) -all -file=test_output.json; \
 	fi
 
 .PHONY: int
 int: $(TPARSE)
 	@if [ -f go.work ]; \
 	then \
-		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... --tags integration -coverprofile={}/coverage.txt --count=1 -json | $(TPARSE) -all; \
+		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... --tags integration -coverprofile={}/coverage.txt --count=1 -json > test_output.json; \
+		$(TPARSE) -all -file=test_output.json; \
 	else \
-		go test $(SOURCEDIR)/... --tags integration --count=1 -coverprofile=coverage.txt -json | $(TPARSE) -all; \
+		go test $(SOURCEDIR)/... --tags integration --count=1 -coverprofile=coverage.txt -json > test_output.json; \
+		$(TPARSE) -all -file=test_output.json; \
 	fi
 else
 .PHONY: test
 test: $(TPARSE)
 	@if [ -f go.work ]; \
 	then \
-		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... -json | $(TPARSE) -all; \
+		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... -json > test_output.json; \
+		$(TPARSE) -all -file=test_output.json; \
 	else \
-		go test -v $$(go list ./... | grep -v /vendor/) -json | $(TPARSE) -all; \
+		go test -v $$(go list ./... | grep -v /vendor/) -json > test_output.json; \
+		$(TPARSE) -all -file=test_output.json; \
 	fi
 
 .PHONY: int
 int: $(TPARSE)
 	@if [ -f go.work ]; \
 	then \
-		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... --tags integration --count=1 -json | $(TPARSE) -all; \
+		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... --tags integration --count=1 -json > test_output.json; \
+		$(TPARSE) -all -file=test_output.json; \
 	else \
-		go test $(SOURCEDIR)/... --tags integration --count=1 -json | $(TPARSE) -all; \
+		go test $(SOURCEDIR)/... --tags integration --count=1 -json > test_output.json; \
+		$(TPARSE) -all -file=test_output.json; \
 	fi
 endif
 
