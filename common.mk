@@ -99,10 +99,15 @@ clean_common:
 	rm -rf ${FULL_APP_PATH}
 	rm -rf ${FULL_APP_PATH}.exe
 
-.PHONY: prepare_githooks
-prepare_githooks:
+.PHONY: add-hook-pre-push
+add-hook-pre-push:
 	rm .git/hooks/pre-push || true
 	ln -s ../../$(GOMAKEFILES_DIR)/githook_prepush.sh .git/hooks/pre-push
+
+.PHONY: add-hook-post-commit-auto-tag
+add-hook-post-commit-auto-tag:
+	rm .git/hooks/post-commit || true
+	ln -s ../../$(GOMAKEFILES_DIR)/githook_postcommit.sh .git/hooks/post-commit
 
 .PHONY: copy_to_vagrant
 copy_to_vagrant: $(MAIN_APP_DIR)/$(APP_NAME)
