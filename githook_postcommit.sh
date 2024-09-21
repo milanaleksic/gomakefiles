@@ -24,3 +24,10 @@ echo "                                         "
 echo "                                         "
 echo "      You have just committed and tagged "
 echo "      your code as $DATE-$COMMIT         "
+
+echo "Removing deprecated un-pushed tags..."
+git show-ref --tags | \
+  grep -v -F "$(git ls-remote --tags origin | grep -v '\^{}' | cut -f 2)" | \
+  grep -v "$(git rev-parse --short HEAD)" | \
+  awk -F'/' '{print $3}' | \
+  xargs -I{} bash -c "git tag --delete {}"
