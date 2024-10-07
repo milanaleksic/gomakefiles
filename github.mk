@@ -8,7 +8,7 @@
 
 .PHONY: release-local
 release-local:
-	goreleaser release --snapshot --skip-publish --rm-dist
+	goreleaser release --snapshot --skip publish --clean
 	goreleaser build --single-target
 
 .PHONY: ci
