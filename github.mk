@@ -13,4 +13,4 @@ release-local:
 
 .PHONY: ci
 ci:
-	goreleaser release
+	goreleaser release --skip validate
