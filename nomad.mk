@@ -1,3 +1,5 @@
+NOMAD_VERSION := 1.8.0
+
 NOMAD := $(SOURCEDIR)/nomad
 $(NOMAD):
 	@echo "installing 'nomad' executable: $(NOMAD) version $(NOMAD_VERSION)"
