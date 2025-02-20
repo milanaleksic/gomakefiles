@@ -63,22 +63,18 @@ else
 test: $(TPARSE)
 	@if [ -f go.work ]; \
 	then \
-		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... -json > test_output.json; \
-		$(TPARSE) -all -file=test_output.json; \
+		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/...; \
 	else \
-		go test -v $$(go list ./... | grep -v /vendor/) -json > test_output.json; \
-		$(TPARSE) -all -file=test_output.json; \
+		go test -v $$(go list ./... | grep -v /vendor/); \
 	fi
 
 .PHONY: int
 int: $(TPARSE)
 	@if [ -f go.work ]; \
 	then \
-		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... --tags integration --count=1 -json > test_output.json; \
-		$(TPARSE) -all -file=test_output.json; \
+		go work edit -json | jq -r '.Use[].DiskPath' | xargs -I{} go test -v {}/... --tags integration --count=1; \
 	else \
-		go test $(SOURCEDIR)/... --tags integration --count=1 -json > test_output.json; \
-		$(TPARSE) -all -file=test_output.json; \
+		go test $(SOURCEDIR)/... --tags integration --count=1; \
 	fi
 endif
 
