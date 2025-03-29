@@ -7,7 +7,7 @@
 metalinter:
 	@if [ -f go.work ]; \
 	then \
-		golangci-lint run --issues-exit-code=0 --out-format=github-actions -- $$(go work edit -json | jq -c -r '[.Use[].DiskPath] | map_values(. + "/...")[]'); \
+		golangci-lint run --issues-exit-code=0 -- $$(go work edit -json | jq -c -r '[.Use[].DiskPath] | map_values(. + "/...")[]'); \
 	else \
 		golangci-lint run --issues-exit-code=0; \
 	fi
@@ -16,7 +16,7 @@ metalinter:
 metalinter_strict:
 	@if [ -f go.work ]; \
 	then \
-		golangci-lint run --issues-exit-code=1 --out-format=github-actions -- $$(go work edit -json | jq -c -r '[.Use[].DiskPath] | map_values(. + "/...")[]'); \
+		golangci-lint run --issues-exit-code=1 -- $$(go work edit -json | jq -c -r '[.Use[].DiskPath] | map_values(. + "/...")[]'); \
 	else \
 		golangci-lint run --issues-exit-code=1; \
 	fi
@@ -25,7 +25,7 @@ metalinter_strict:
 metalinter_fix:
 	@if [ -f go.work ]; \
 	then \
-		golangci-lint run --issues-exit-code=1 --fix --out-format=github-actions -- $$(go work edit -json | jq -c -r '[.Use[].DiskPath] | map_values(. + "/...")[]'); \
+		golangci-lint run --issues-exit-code=1 --fix -- $$(go work edit -json | jq -c -r '[.Use[].DiskPath] | map_values(. + "/...")[]'); \
 	else \
 		golangci-lint run --issues-exit-code=1 --fix; \
 	fi

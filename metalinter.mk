@@ -12,8 +12,8 @@ $(GOMETALINTER):
 
 .PHONY: metalinter
 metalinter: $(SOURCES) | $(GOMETALINTER)
-	@PATH=$$PATH:./bin && $(GOMETALINTER) --exclude="${EXCLUDES_METALINTER}" --vendor --disable=gotype --deadline=10m ${EXTRA_ARGS_METALINTER} ./... | sed "s/^/[METALINTER_WARN] /" || true
+	@PATH=$$PATH:./bin && $(GOMETALINTER) --exclude="${EXCLUDES_METALINTER}" --vendor --deadline=10m ${EXTRA_ARGS_METALINTER} ./... | sed "s/^/[METALINTER_WARN] /" || true
 
 .PHONY: metalinter_strict
 metalinter_strict: $(SOURCES) | $(GOMETALINTER)
-	@PATH=$$PATH:./bin && $(GOMETALINTER) --exclude="${EXCLUDES_METALINTER}" --vendor --disable=gotype --deadline=10m ${EXTRA_ARGS_METALINTER} ./...
+	@PATH=$$PATH:./bin && $(GOMETALINTER) --exclude="${EXCLUDES_METALINTER}" --vendor --deadline=10m ${EXTRA_ARGS_METALINTER} ./...
